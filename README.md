@@ -4,9 +4,9 @@ A full-stack toolset for NextJS localization.
 
 ![landing page image](public/landing-page.png)
 
-<p align="center">
+<p>
   <a aria-label="Yuzu logo" href="https://withyuzu.com">
-    <img src="https://img.shields.io/badge/Radish Workshop?style=for-the-badge&labelColor=000">
+    <img src="https://img.shields.io/badge/Radish_Workshop?style=for-the-badge&labelColor=000">
   </a>
   <a aria-label="NPM version" href="https://www.npmjs.com/package/withyuzu">
     <img alt="" src="https://img.shields.io/npm/v/withyuzu.svg?style=for-the-badge&labelColor=000000">
