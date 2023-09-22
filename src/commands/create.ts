@@ -4,7 +4,7 @@ import { Command } from 'commander'
 import { ORIGIN } from '@/src/utils/templates'
 
 export const createCommand = new Command()
-  .name('init')
+  .name('create')
   .description('Open a web browser to create a Yuzu project for translation and collaboration on the web')
   .action(async (opts) => {
     create()
