@@ -61,11 +61,10 @@ export const build = (config: Config, cwd: string, verbose?: boolean) => {
 
     const files = getFilesFromGlobs(cwd, config.content, ['**/node_modules/**', '**/.next/**'])
 
-    logger.info(`🍋 Parsing ${chalk.cyan(files.length)} content files...`)
-    const spinner = ora(`0 / ${files.length}`).start()
+    const spinner = ora(` ${chalk.cyan(`Parsing ${files.length} content files...`)}`).start()
 
     const messages = files.map((file, index) => {
-      spinner.text = `${index + 1} / ${files.length}`
+      spinner.text = ` ${chalk.cyan(`Parsed ${index + 1} / ${files.length} content files`)}`
       verbose && logger.info(`🍋 Scanning ${chalk.cyan(file)}`)
 
       return scanMessages(file, config.transformers)

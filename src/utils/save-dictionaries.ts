@@ -1,11 +1,8 @@
 import * as fs from 'fs'
 import path from 'path'
 import { Config } from '@/src/utils/get-config'
-import { logger } from '@/src/utils/logger'
-
-const sanitize = (str: string) => {
-  return str.replaceAll('\'', '\\\'')
-}
+import ora from 'ora'
+import chalk from 'chalk'
 
 interface Dictionary { 
   [key: string]: string
@@ -17,17 +14,19 @@ export const updateDictionaries = (messages: string[], config: Config, cwd: stri
     fs.mkdirSync(config.resources, { recursive: true })
   }
 
+  const spinner = ora(`${chalk.cyan(` Updating ${config.locales.length} locale files...`)}`).start()
+
   config.locales.forEach((locale) => {
     const dictionaryPath = path.resolve(cwd, `${config.resources}/${locale.code}.json`)
     let oldDictionary: Dictionary = {}
 
     // if it exists, treat it as a starting point
     if (fs.existsSync(dictionaryPath)) {
-      logger.info(`Updating ${dictionaryPath}`)
+      spinner.text = `${chalk.cyan(` Updating ${dictionaryPath}`)}`
       oldDictionary = JSON.parse(fs.readFileSync(dictionaryPath, 'utf8'))
     }
     else {
-      logger.info(`Creating ${dictionaryPath}`)
+      spinner.text = `${chalk.cyan(` Creating ${dictionaryPath}`)}`
     }
 
     const dictionary: Dictionary = {}
@@ -44,4 +43,6 @@ export const updateDictionaries = (messages: string[], config: Config, cwd: stri
 
     fs.writeFileSync(dictionaryPath, JSON.stringify(dictionary))
   })
+
+  spinner.succeed(` ${chalk.cyan(`Updated ${config.locales.length} locale files`)}`)
 }

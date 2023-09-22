@@ -1,4 +1,5 @@
 import { cosmiconfig } from "cosmiconfig"
+import { TypeScriptLoader } from "cosmiconfig-typescript-loader";
 import { loadConfig } from "tsconfig-paths"
 import * as z from "zod"
 export const DEFAULT_LOCALE_CODE = 'en'
@@ -6,7 +7,11 @@ export const DEFAULT_LOCALE_NAME = 'English'
 
 // TODO: Figure out if we want to support all cosmiconfig formats.
 // A simple components.json file would be nice.
-const explorer = cosmiconfig('yuzu')
+const explorer = cosmiconfig('yuzu', {
+  loaders: {
+    '.ts': TypeScriptLoader(),
+  }
+})
 
 export const configSchema = z
   .object({
@@ -38,8 +43,7 @@ export async function getConfig(cwd: string) {
 
 export async function resolveConfigPaths(cwd: string, config: Config) {
 
-  // Read tsconfig.json.
-  const tsConfig = await loadConfig(cwd)
+  const tsConfig = loadConfig(cwd)
 
   if (config.tsx && tsConfig.resultType === "failed") {
     throw new Error(
@@ -60,6 +64,6 @@ export async function getRawConfig(cwd: string): Promise<Config | null> {
     }
     return configSchema.parse(configResult.config)
   } catch (error) {
-    throw new Error(`Invalid configuration found in ${cwd}/yuzu.config.(ts|js).`)
+    throw new Error(`Invalid configuration: ${error}`)
   }
 }
