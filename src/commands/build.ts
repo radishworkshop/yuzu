@@ -7,7 +7,7 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 import path from 'path'
 import { scanMessages } from '@/src/utils/scan-messages'
-import { updateDictionaries } from '@/src/utils/save-dictionaries'
+import { updateDictionaries } from '@/src/utils/update-dictionaries'
 import { Config, getConfig } from '@/src/utils/get-config'
 import { CLIENT, SERVER } from '@/src/utils/templates'
 
@@ -71,7 +71,7 @@ export const build = (config: Config, cwd: string, verbose?: boolean) => {
     }).flat()
 
     spinner.succeed()
-    updateDictionaries(messages, config, cwd)
+    updateDictionaries(messages.filter((message, index) => messages.indexOf(message) === index), config, cwd)
 
     const extension = config.tsx ? 'ts' : 'js'
 

@@ -49,10 +49,15 @@ export const push = async (config: Config, cwd: string, verbose?: boolean) => {
     const dictionaryPath = path.resolve(cwd, `${config.resources}/${config.defaultLocale}.json`)
     const dictionary = JSON.parse(fs.readFileSync(dictionaryPath, 'utf8'))
     const messages = Object.keys(dictionary)
+
     const apiKey = process.env.YUZU_API_KEY
+    const defaultLocale = config.defaultLocale
+    const locales = config.locales
 
     logger.info(`🍋 Syncing ${chalk.cyan(messages.length)} keys.`)
     const { data } = await axios.post(ORIGIN + '/api/cli/push', {
+      defaultLocale,
+      locales,
       messages,
       apiKey,
     })

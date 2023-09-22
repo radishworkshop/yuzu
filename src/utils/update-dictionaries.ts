@@ -9,12 +9,11 @@ interface Dictionary {
 }
 
 export const updateDictionaries = (messages: string[], config: Config, cwd: string) => {
-
   if (!fs.existsSync(config.resources)) {
     fs.mkdirSync(config.resources, { recursive: true })
   }
 
-  const spinner = ora(`${chalk.cyan(` Updating ${config.locales.length} locale files...`)}`).start()
+  const spinner = ora(`${chalk.cyan(` Updating ${config.locales.length} locales...`)}`).start()
 
   config.locales.forEach((locale) => {
     const dictionaryPath = path.resolve(cwd, `${config.resources}/${locale.code}.json`)
@@ -44,5 +43,5 @@ export const updateDictionaries = (messages: string[], config: Config, cwd: stri
     fs.writeFileSync(dictionaryPath, JSON.stringify(dictionary))
   })
 
-  spinner.succeed(` ${chalk.cyan(`Updated ${config.locales.length} locale files`)}`)
+  spinner.succeed(` ${chalk.cyan(`Updated ${config.locales.length} locales with ${messages.length} keys`)}`)
 }

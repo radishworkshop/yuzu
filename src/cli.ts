@@ -6,20 +6,23 @@ import { pushCommand } from '@/src/commands/push'
 import { pullCommand } from '@/src/commands/pull'
 import { syncCommand } from '@/src/commands/sync'
 import { translateCommand } from '@/src/commands/translate'
-
+import dotenv from 'dotenv';
 import { Command } from 'commander'
-
 import { getPackageInfo } from '@/src/utils/get-package-info'
 
 process.on('SIGINT', () => process.exit(0))
 process.on('SIGTERM', () => process.exit(0))
 
+const loadEnv = (paths: string[]) => {
+  for (const path of paths) {
+    dotenv.config({ path });
+  }
+}
+
 async function main() {
   const packageInfo = getPackageInfo()
-  // const projectInfo = await getProjectInfo()
-  // const cliConfig = await getCliConfig()
 
-  // const packageManager = getPackageManager()
+  loadEnv(['.env', `.env.${process.env.NODE_ENV}`, '.env.local'])
 
   const program = new Command()
     .name('withyuzu')

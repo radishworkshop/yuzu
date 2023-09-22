@@ -43,13 +43,11 @@ export const translateCommand = new Command()
         return
       }
 
-      const spinner = ora(`Syncing and translating codebase and Yuzu project`).start()
+      logger.info(`🍋 Syncing and translating codebase and Yuzu project`)
       build(config, cwd)
       await push(config, cwd)
       await translate(config, cwd)
       await pull(config, cwd)
-      spinner.succeed()
-
 
     } catch (error) {
       handleError(error)
@@ -61,6 +59,7 @@ export const translateCommand = new Command()
     const defaultLocale = config.defaultLocale
     const locales = config.locales.map(locale => locale.code)
 
+    logger.info
     const spinner = ora(`Translating messages...`).start()
     await axios.post(ORIGIN + '/api/cli/translate-all', {
       locales,

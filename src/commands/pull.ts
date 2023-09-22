@@ -59,8 +59,10 @@ export const pull = async (config: Config, cwd: string, verbose?: boolean) => {
       logger.error(`🍋 Failed: ${data.error}`)
     }
     else {
-      // Need to update to write to a file
-      console.log(data)
+      Object.entries(data).forEach(([code, pulledDictionary]) => {
+        const filePath = path.resolve(cwd, `${config.resources}/${code}.json`)
+        fs.writeFileSync(filePath, JSON.stringify(pulledDictionary))
+      })
     }
   } catch (err) {
     logger.error(`Failed to pull translation values: `, err)
