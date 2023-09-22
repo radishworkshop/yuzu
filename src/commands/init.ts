@@ -110,7 +110,6 @@ export async function promptForConfig(
     initial: DEFAULT_LOCALE_NAME,
   }])
 
-
   const extension = options.typescript ? 'ts' : 'js'
   const lastOption = await prompts([{
     type: 'text',

@@ -1,13 +1,14 @@
 {
   "name": "withyuzu",
   "author": "Radish Workshop, LLC",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Utilities and command line interface (CLI) for withyuzu.com localization.",
   "homepage": "https://www.withyuzu.com/docs",
   "main": "./dist/index.js",
   "bin": "./dist/cli.js",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "publish": "npm run build && npm publish"
   },
   "devDependencies": {
     "@babel/parser": "^7.22.16",
@@ -33,5 +34,8 @@
     "tsconfig-paths": "^4.2.0",
     "zod": "^3.22.2"
   },
+  "keywords": [
+    "localization", "translation", "i18n", "l10n"
+  ],
   "license": "MIT"
 }
