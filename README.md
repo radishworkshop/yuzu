@@ -6,8 +6,8 @@ A full-stack toolset for NextJS localization.
 
 <p>
   <a aria-label="Yuzu logo" href="https://withyuzu.com">
-    <img src="https://img.shields.io/badge/Radish_Workshop?style=for-the-badge&labelColor=000">
-  </a>
+    <img src="https://img.shields.io/badge/Radish_Workshop-000000?style=for-the-badge">
+  </a->
   <a aria-label="NPM version" href="https://www.npmjs.com/package/withyuzu">
     <img alt="" src="https://img.shields.io/npm/v/withyuzu.svg?style=for-the-badge&labelColor=000000">
   </a>
