@@ -2,7 +2,7 @@
 
 A full-stack toolset for NextJS localization.
 
-![landing page image](public/landing-page.png)
+![landing page image](https://www.withyuzu.com/images/landing-page.png)
 
 <p>
   <a aria-label="Yuzu logo" href="https://withyuzu.com">
