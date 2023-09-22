@@ -1,7 +1,6 @@
 import { handleError } from '@/src/utils/handle-error'
 import { logger } from '@/src/utils/logger'
 import { Command } from 'commander'
-import open from 'open'
 import { ORIGIN } from '@/src/utils/templates'
 
 export const createCommand = new Command()
@@ -15,7 +14,7 @@ export const create = () => {
   try {
     const url = `${ORIGIN}/new`
     logger.info(`🍋 Opening ${url}`)
-    open(url)
+    import('open').then((open) => open.default(url))
   } catch (error) {
     handleError(error)
   }
