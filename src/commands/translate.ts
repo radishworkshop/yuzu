@@ -59,7 +59,6 @@ export const translateCommand = new Command()
     const defaultLocale = config.defaultLocale
     const locales = config.locales.map(locale => locale.code)
 
-    logger.info
     const spinner = ora(`Translating messages...`).start()
     await axios.post(ORIGIN + '/api/cli/translate-all', {
       locales,
