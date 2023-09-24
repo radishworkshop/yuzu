@@ -133,7 +133,7 @@ export async function promptForConfig(
   // ]
 
   const config = configSchema.parse({
-    $schema: 'https://wwww.withyuzu.com/schema.json',
+    $schema: 'https://wwww.yuzujs.com/schema.json',
     defaultLocale: options.defaultLocale,
     locales: [{
       code: options.defaultLocale,
@@ -195,7 +195,7 @@ export async function promptForConfig(
   const { openWeb } = await prompts({
     type: 'confirm',
     name: 'openWeb',
-    message: `Open ${highlight('withyuzu.com/new')} to create a new project. Proceed?`,
+    message: `Open ${highlight('yuzujs.com/new')} to create a new project. Proceed?`,
     initial: true,
   })
 

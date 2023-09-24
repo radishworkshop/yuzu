@@ -1,7 +1,7 @@
 import { Config } from '@/src/utils/get-config'
 
 // export const ORIGIN = 'http://localhost:3000'
-export const ORIGIN = 'https://www.withyuzu.com'
+export const ORIGIN = 'https://www.yuzujs.com'
 
 export const CONFIG = (config: Config, defaultLocaleName: string) => `${MODULE(config, `
   defaultLocale: '${config.defaultLocale}',

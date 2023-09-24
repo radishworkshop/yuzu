@@ -25,8 +25,8 @@ async function main() {
   loadEnv(['.env', `.env.${process.env.NODE_ENV}`, '.env.local'])
 
   const program = new Command()
-    .name('withyuzu')
-    .description('Command line interface for the withyuzu.com localization toolset')
+    .name('yuzujs')
+    .description('Command line interface for the yuzujs.com localization toolset')
     .version(
       packageInfo.version || '1.0.0',
       '-v, --version',
