@@ -1,7 +1,7 @@
 {
   "name": "withyuzu",
   "author": "Radish Workshop, LLC",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "Utilities and command line interface (CLI) for withyuzu.com localization.",
   "homepage": "https://www.withyuzu.com/docs",
   "bin": "./dist/cli.js",
@@ -27,6 +27,7 @@
     "chalk": "^4.1.2",
     "commander": "^10.0.1",
     "cosmiconfig": "^8.3.5",
+    "execa": "^8.0.1",
     "glob": "^10.3.4",
     "open": "^9.1.0",
     "ora": "5.4.1",
@@ -38,7 +39,11 @@
     "localization",
     "translation",
     "i18n",
-    "l10n"
+    "l10n",
+    "front-end",
+    "framework",
+    "nextjs",
+    "react"
   ],
   "license": "MIT"
 }

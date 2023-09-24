@@ -168,6 +168,30 @@ export async function promptForConfig(
   await fs.writeFile(targetPath, templates.CONFIG(config, options.defaultLocaleName), 'utf8')
   spinner.succeed()
 
+  if (options.framework === 'nextjs') {
+    const { nextInternational  } = await prompts({
+      type: 'confirm',
+      name: 'nextInternational',
+      message: `Installing next-international with npm. Proceed?`,
+      initial: true,
+    })
+
+    if (nextInternational) {
+      try {
+        import('execa').then(async ({ execa }) => {
+          const { stdout } = await execa('npm', ['install', '--save', 'next-international@latest']);
+          console.log(stdout)
+        })
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(`Error: ${error.message}`);
+        } else {
+          console.error('An unknown error occurred during `npm install next-international@latest`.');
+        }
+      }
+    }
+  }
+
   const { openWeb } = await prompts({
     type: 'confirm',
     name: 'openWeb',
