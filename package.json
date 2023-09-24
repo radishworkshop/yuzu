@@ -1,9 +1,9 @@
 {
-  "name": "withyuzu",
+  "name": "yuzujs",
   "author": "Radish Workshop, LLC",
-  "version": "0.1.10",
-  "description": "Utilities and command line interface (CLI) for withyuzu.com localization.",
-  "homepage": "https://www.withyuzu.com/docs",
+  "version": "0.2.0",
+  "description": "Utilities and command line interface (CLI) for yuzujs.com localization.",
+  "homepage": "https://www.yuzujs.com/docs",
   "bin": "./dist/cli.js",
   "scripts": {
     "build": "tsup"
