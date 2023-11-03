@@ -30,7 +30,7 @@ export const updateDictionaries = (messages: string[], config: Config, cwd: stri
 
     const dictionary: Dictionary = {}
 
-    const isDefault = locale.code === config.defaultLocale
+    const isDefault = locale.code === config.locales[0].code
     messages.forEach((message) => {
       if (oldDictionary[message]) {
         dictionary[message] = oldDictionary[message]

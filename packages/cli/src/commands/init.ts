@@ -102,7 +102,7 @@ export async function promptForConfig(
     type: 'text',
     name: 'defaultLocale',
     message: `What is your default locale ${highlight('code')}?`,
-    initial: defaultConfig?.defaultLocale ?? DEFAULT_LOCALE_CODE,
+    initial: defaultConfig?.locales?.[0]?.code ?? DEFAULT_LOCALE_CODE,
   }, {
     type: 'text',
     name: 'defaultLocaleName',
@@ -134,7 +134,6 @@ export async function promptForConfig(
 
   const config = configSchema.parse({
     $schema: 'https://wwww.yuzujs.com/schema.json',
-    defaultLocale: options.defaultLocale,
     locales: [{
       code: options.defaultLocale,
       name: options.defaultLocaleName,
@@ -165,7 +164,7 @@ export async function promptForConfig(
   logger.info('')
   const spinner = ora(`Writing yuzu.config.${extension}...`).start()
   const targetPath = path.resolve(cwd, `yuzu.config.${extension}`)
-  await fs.writeFile(targetPath, templates.CONFIG(config, options.defaultLocaleName), 'utf8')
+  await fs.writeFile(targetPath, templates.CONFIG(config), 'utf8')
   spinner.succeed()
 
   if (options.framework === 'nextjs') {

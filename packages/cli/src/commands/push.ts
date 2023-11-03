@@ -12,9 +12,9 @@ const buildOptionsSchema = z.object({
   cwd: z.string(),
 })
 
-export const pullCommand = new Command()
-  .name('pull')
-  .description('sync Yuzu project translations locally')
+export const pushCommand = new Command()
+  .name('push')
+  .description('sync local translation keys to your Yuzu project')
   .option(
     '-c, --cwd <cwd>',
     'the working directory. defaults to the current directory.',
@@ -32,39 +32,42 @@ export const pullCommand = new Command()
       process.exit(1)
     }
 
+    logger.info('🍋 Scanning files...')
+
     const config = await getConfig(cwd)
     if (!config) {
       logger.error('No config file found.')
       return
     }
 
-    await pull(config, cwd)
+    await push(config, cwd)
 
   })
 
-export const pull = async (config: Config, cwd: string, verbose?: boolean) => {
+export const push = async (config: Config, cwd: string, verbose?: boolean) => {
   try {
-    const dictionaryPath = path.resolve(cwd, `${config.resources}/${config.defaultLocale}.json`)
+    const defaultLocale = config.locales[0].code
+    const dictionaryPath = path.resolve(cwd, `${config.resources}/${defaultLocale}.json`)
     const dictionary = JSON.parse(fs.readFileSync(dictionaryPath, 'utf8'))
     const messages = Object.keys(dictionary)
-    const apiKey = process.env.YUZU_API_KEY
 
-    logger.info(`🍋 Pulling translations for ${chalk.cyan(messages.length)} keys.`)
-    const { data } = await axios.post(ORIGIN + '/api/cli/pull', {
+    const apiKey = process.env.YUZU_API_KEY
+    const locales = config.locales
+
+    logger.info(`🍋 Syncing ${chalk.cyan(messages.length)} keys.`)
+    const { data } = await axios.post(ORIGIN + '/api/push', {
+      locales,
       messages,
       apiKey,
     })
-
-    if (data.error) {
-      logger.error(`🍋 Failed: ${data.error}`)
+    if (data.success) {
+      logger.info(`🍋 Pushed keys to project`)
     }
     else {
-      Object.entries(data).forEach(([code, pulledDictionary]) => {
-        const filePath = path.resolve(cwd, `${config.resources}/${code}.json`)
-        fs.writeFileSync(filePath, JSON.stringify(pulledDictionary))
-      })
+      logger.error(`🍋 Failed: ${data.error}`)
     }
+
   } catch (err) {
-    logger.error(`Failed to pull translation values: `, err)
+    logger.error(`Failed to push translation keys: `, err)
   }
 }

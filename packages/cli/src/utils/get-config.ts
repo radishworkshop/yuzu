@@ -16,7 +16,6 @@ const explorer = cosmiconfig('yuzu', {
 export const configSchema = z
   .object({
     $schema: z.string().optional(),
-    defaultLocale: z.string(),
     locales: z.array(z.object({
       code: z.string(),
       name: z.string(),

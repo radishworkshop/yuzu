@@ -43,11 +43,8 @@ export const translateCommand = new Command()
         return
       }
 
-      logger.info(`🍋 Syncing and translating codebase and Yuzu project`)
-      build(config, cwd)
-      await push(config, cwd)
+      logger.info(`🍋 Translating Yuzu project in Codesheets`)
       await translate(config, cwd)
-      await pull(config, cwd)
 
     } catch (error) {
       handleError(error)
@@ -56,13 +53,9 @@ export const translateCommand = new Command()
 
   const translate = async (config: Config, cwd: string) => {
     const apiKey = process.env.YUZU_API_KEY
-    const defaultLocale = config.defaultLocale
-    const locales = config.locales.map(locale => locale.code)
 
-    const spinner = ora(`Translating messages...`).start()
-    await axios.post(ORIGIN + '/api/cli/translate-all', {
-      locales,
-      defaultLocale,
+    const spinner = ora(` Translating messages...`).start()
+    await axios.post(ORIGIN + '/api/translate', {
       apiKey
     })
 

@@ -1,13 +1,12 @@
 import { Config } from '@/src/utils/get-config'
 
 // export const ORIGIN = 'http://localhost:3000'
-export const ORIGIN = 'https://www.yuzujs.com'
+export const ORIGIN = process.env.YUZU_ORIGIN || 'https://www.yuzujs.com'
 
-export const CONFIG = (config: Config, defaultLocaleName: string) => `${MODULE(config, `
-  defaultLocale: '${config.defaultLocale}',
+export const CONFIG = (config: Config) => `${MODULE(config, `
   locales: [{
-    code: '${config.defaultLocale}',
-    name: '${defaultLocaleName}',
+    code: '${config.locales[0].code}',
+    name: '${config.locales[0].name}',
   }],
   resources: '${config.resources}',
   content: [\n    ${config.content.map(t => `'${t}'`).join(',\n    ')}\n  ],
