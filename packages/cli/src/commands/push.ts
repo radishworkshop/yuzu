@@ -7,6 +7,7 @@ import * as fs from 'fs'
 import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
 import { ORIGIN } from '@/src/utils/templates'
+import { requestConfig } from '../utils/api'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -51,15 +52,14 @@ export const push = async (config: Config, cwd: string, verbose?: boolean) => {
     const dictionary = JSON.parse(fs.readFileSync(dictionaryPath, 'utf8'))
     const messages = Object.keys(dictionary)
 
-    const apiKey = process.env.YUZU_API_KEY
     const locales = config.locales
 
     logger.info(`🍋 Syncing ${chalk.cyan(messages.length)} keys.`)
     const { data } = await axios.post(ORIGIN + '/api/push', {
       locales,
       messages,
-      apiKey,
-    })
+    }, requestConfig)
+
     if (data.success) {
       logger.info(`🍋 Pushed keys to project`)
     }

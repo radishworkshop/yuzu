@@ -7,6 +7,7 @@ import * as fs from 'fs'
 import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
 import { ORIGIN } from '@/src/utils/templates'
+import { requestConfig } from '@/src/utils/api'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -48,13 +49,11 @@ export const pull = async (config: Config, cwd: string, verbose?: boolean) => {
     const dictionaryPath = path.resolve(cwd, `${config.resources}/${defaultLocale}.json`)
     const dictionary = JSON.parse(fs.readFileSync(dictionaryPath, 'utf8'))
     const messages = Object.keys(dictionary)
-    const apiKey = process.env.YUZU_API_KEY
 
     logger.info(`🍋 Pulling translations for ${chalk.cyan(messages.length)} keys.`)
     const { data } = await axios.post(ORIGIN + '/api/pull', {
       messages,
-      apiKey,
-    })
+    }, requestConfig)
 
     if (data.error) {
       logger.error(`🍋 Failed: ${data.error}`)
@@ -72,13 +71,6 @@ export const pull = async (config: Config, cwd: string, verbose?: boolean) => {
         const filePath = path.resolve(cwd, `${config.resources}/${code}.json`)
         fs.writeFileSync(filePath, JSON.stringify(dictionary))
       })
-
-      /*
-      Object.entries(data).forEach(([code, pulledDictionary]) => {
-        const filePath = path.resolve(cwd, `${config.resources}/${code}.json`)
-        fs.writeFileSync(filePath, JSON.stringify(pulledDictionary))
-      })
-      */
     }
   } catch (err) {
     logger.error(`Failed to pull translation values: `, err)

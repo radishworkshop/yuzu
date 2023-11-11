@@ -1,5 +1,4 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 TODO.txt
 
 # dependencies
@@ -10,14 +9,17 @@ node_modules
 # testing
 coverage
 
-# next.js
+# output
 .next/
 out/
-build
+build/
+dist/
 
 # misc
 .DS_Store
 *.pem
+.xatarc
+.vscode
 
 # debug
 npm-debug.log*
@@ -37,5 +39,5 @@ yarn-error.log*
 .contentlayer
 tsconfig.tsbuildinfo
 
-# output
-dist
+# fonts
+fonts

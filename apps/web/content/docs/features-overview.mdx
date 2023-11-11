@@ -1,0 +1,39 @@
+---
+title: Features Overview
+description: What Yuzu offers out of the box
+---
+
+# Command-line tools
+Yuzu `init`, `build`, `push`, `translate`, and `pull` commands are available to handle every aspect of your localization needs. All of these commands can be used anywhere that `npx` can be run. However, the AST parser in `build` assumes you are using TypeScript, JavaScript, and/or JSX, so only those technologies are supported out of the box. (If you're not using JS but 
+still want to try Yuzu, let us know in [discord](/discord) and we'll help you.)
+
+* `init` is a prompt based initializer that sets up your config file with the details of your project and opens a browser window for you to create a Yuzu project.
+* `build` - Builds your translation keys file (e.g. en.json) via static analysis of your codebase. In most cases, this is wherever you call `t()`, but you can customize it as well.
+* `push` - Pushes your translation *keys* to Yuzu. Yuzu considers your codebase to be the authority on which keys are actively in use.
+* `pull` - Pulls translation *values* from the web backend (via [Codesheets](https://www.codesheets.com/)). The web backend is the authority on the translated values. 
+
+By taking an opinionated stance that your codebase is the authority for messages and the web backend is the authority for translation values, Yuzu optimizes for reliability and control.
+Each of these commands relies on the `YUZU_API_KEY` environment variable, which you can copy from your project on [yuzujs.com](https://www.yuzujs.com/).
+
+## NextJS and next-international
+If you are using NextJS app directory and [next-international](https://next-international.vercel.app), `build` is specially designed to follow best practices and save you time by keeping your server.ts and client.ts files synced with your locales.
+
+If you are not, you can still use `build` to generate your translation keys file. and you can still add your own supporting files to the yuzu folder if you want.
+
+# Translation engine
+Yuzu `translate` uses a mix of DeepL and Google Translate to update your remote dictionary (i.e. the web backend) with translated values. It won't overwrite any values that are already there, so if you make manual changes those will persist.
+
+GPT-4 is also available inside of Codesheets. Typically this is best for tweaks like "change the length of this string" or "make this more formal" rather than translating from scratch.
+
+# Codesheets web interface
+Typically AI-based translation will get you most of the way there, but you may want to make tweaks yourself, share with a multilingual friend for help, or enlist professional review for large scale projects.
+
+Through Codesheets, Yuzu provides a lightweight translation management system that is as easy to maneuver as a simple spreadsheet, with extra functionality around collaboration, organization, and translation. You and your team can also freely edit the translations directly and sync back to your codebase using `npx yuzu sync`.
+
+<Image className="dark:hidden mt-4" alt="Codesheets" width={1200} height={600} src="/images/product/light/codesheets.png" />
+<Image className="hidden dark:block mt-4" alt="Codesheets" width={1200} height={600} src="/images/product/dark/codesheets.png" />
+
+If you would like to have a professional review your translations, we don't have an in-house agency but we are happy to help you find support. Just [join our Discord server](/discord) and tell us about your needs, or [email us directly](mailto:contact@yuzujs.com) if you prefer.
+
+# Templates and components
+Yuzu provides a variety of templates and components to make it easier to get started and provide a reliable experience to your users. Examples include a `<LanguageSwitcher />` component and middleware for NextJS. These are freely available for copying and pasting in the frameworks section of the documentation.

@@ -1,7 +1,7 @@
 # Yuzu
 The open-source translation management platform and localization system.
 
-![landing page image](https://www.yuzujs.com/images/landing-page.png)
+![landing page image](https://www.yuzujs.com/images/dist/landing-page.png)
 <p>
   <a aria-label="Radish Workshop" href="https://yuzujs.com">
     <img src="https://img.shields.io/badge/Radish_Workshop-000000?style=for-the-badge">
@@ -48,7 +48,7 @@ send us an email at [contact@yuzujs.com](mailto:contact@yuzujs.com).
 - [next-international](https://next-international.vercel.app/)
 - [OpenStatus](https://openstatus.dev/)
 
-## Command Line Interface
+## Command Line Interface 👩‍💻
 The following commands are the core operations of the [yuzu npm package](https://npmjs.com/yuzu). You'll also need to implement an underlying i18n library, such as next-international.
 
 For NextJS, this includes wrapping your strings as messages, adding middleware, and building
@@ -82,7 +82,7 @@ bunx yuzu push # or npx
 
 ### Translate
 Use machine translation to fill in any missing translations in your Yuzu project.
-Yuzu also provides you with a Codesheet that you can make changes too, ask GPT-4 for
+Yuzu also provides you with a [Codesheet](https://codesheets.com) that you can make changes too, ask GPT-4 for
 help with, or share with a multilingual friend or vendor for edits.
 ```bash
 bunx yuzu translate # or npx
@@ -94,8 +94,7 @@ Pull down the latest translations from your Yuzu project.
 bunx yuzu pull # or npx
 ```
 
-
-## Self-hosting 
+## Self-hosting 🖥️
 
 ### Requirements
 
@@ -116,21 +115,23 @@ bunx yuzu pull # or npx
    bun i
    ```
 
-3. Set up your .env file
-
-   In `apps/web` you will find .env.example.
-   Change the name to .env.local and make your own values.
-
-4. Get your API keys
+3. Get your API keys
 
    For everything to work out of the box, you will need API keys for
    [Clerk](https://clerk.com) (Auth),
    [Codesheets](https://codesheets.com) (TMS + GPT-4),
-   [Xata](https://xata.io) (DB),
+   [Xata](https://xata.io) (DB, see `apps/web/db/xata.ts` for schema),
    [DeepL](https://www.deepl.com/pro-api) (ML translation),
    and [Google Translate](https://cloud.google.com/translate) (ML translation)
 
-5. Start the development server
+4. Set up your environment 
+
+   In `apps/web` you will find .env.example. Change the name to .env.local and add your own values. You'll also want to update `apps/web/.xatarc` with your database URL.
+
+5. Add your fonts
+Yuzu uses a licensed font, [Codec Pro](https://www.zetafonts.com/codec-pro), which is not included in this git repository. You can license the font yourself, or add your own font files, or swap to a Google Font using `next/font/google` instead of `next/font/local`.
+
+6. Start the development server
 
    ```sh
     bun dev
@@ -143,18 +144,10 @@ bunx yuzu pull # or npx
 
 Videos to better understand Yuzu and YuzuJS
 
-- [The code behind OpenStatus and how it uses Turbopack](https://youtube.com/watch?v=PYfSJATE8v8).
-- [Drop Betterstack and go open source](https://www.youtube.com/watch?v=PKag0USy3eQ)
+- [TODO(CLI demo)](https://youtube.com/watch?v=ID).
+- [TODO(self-hosting demo)](https://youtube.com/watch?v=ID).
 
 ## Contributing 🤝
 
 If you want to help us build the simplest platform for NextJS localization,
 check out the [contributing guidelines](https://github.com/radishworkshop/yuzu/blob/main/CONTRIBUTING.md)
-
-### Top Contributors
-
-<a href="https://github.com/radishworkshop/yuzu/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=radishworkshop/yuzu" />
-</a>
-
-Made with [Contrib.rocks](https://contrib.rocks)

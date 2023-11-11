@@ -2,7 +2,7 @@
 
 A full-stack toolset for Next.JS localization.
 
-![landing page image](https://www.yuzujs.com/images/landing-page.png)
+![landing page image](https://www.yuzujs.com/images/dist/landing-page.png)
 
 <p>
   <a aria-label="Radish Workshop" href="https://yuzujs.com">

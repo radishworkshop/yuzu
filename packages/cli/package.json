@@ -1,6 +1,5 @@
 {
   "name": "yuzu",
-  "author": "Radish Workshop, LLC",
   "version": "0.3.0",
   "description": "Utilities and command line interface (CLI) for yuzujs.com localization.",
   "homepage": "https://www.yuzujs.com/docs",
@@ -45,5 +44,6 @@
     "nextjs",
     "react"
   ],
+  "author": "Zack Reneau-Wedeen",
   "license": "MIT"
 }

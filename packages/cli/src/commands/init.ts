@@ -178,7 +178,7 @@ export async function promptForConfig(
     if (nextInternational) {
       try {
         import('execa').then(async ({ execa }) => {
-          const { stdout } = await execa('npm', ['install', '--save', 'next-international@latest']);
+          const { stdout } = await execa('npm', ['install', '--save-dev', 'next-international@latest']);
           console.log(stdout)
         })
       } catch (error: unknown) {

@@ -5,8 +5,6 @@ import * as z from "zod"
 export const DEFAULT_LOCALE_CODE = 'en'
 export const DEFAULT_LOCALE_NAME = 'English'
 
-// TODO: Figure out if we want to support all cosmiconfig formats.
-// A simple components.json file would be nice.
 const explorer = cosmiconfig('yuzu', {
   loaders: {
     '.ts': TypeScriptLoader(),

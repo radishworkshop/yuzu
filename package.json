@@ -1,0 +1,13 @@
+{
+  "name": "yuzu",
+  "version": "0.1.0",
+  "author": {
+    "name": "Zack Reneau-Wedeen",
+    "url": "https://zackrw.com"
+  },
+  "packageManager": "bun@1.0.8",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}

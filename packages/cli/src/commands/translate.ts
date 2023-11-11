@@ -11,6 +11,7 @@ import { ORIGIN } from '@/src/utils/templates'
 import { build } from '@/src/commands/build'
 import { push } from '@/src/commands/push'
 import { pull } from '@/src/commands/pull'
+import { requestConfig } from '../utils/api'
 
 const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -52,12 +53,7 @@ export const translateCommand = new Command()
   })
 
   const translate = async (config: Config, cwd: string) => {
-    const apiKey = process.env.YUZU_API_KEY
-
     const spinner = ora(` Translating messages...`).start()
-    await axios.post(ORIGIN + '/api/translate', {
-      apiKey
-    })
-
+    await axios.post(ORIGIN + '/api/translate', {}, requestConfig)
     spinner.succeed()
   }

@@ -1,0 +1,68 @@
+---
+title: Building your messages
+description: Yuzu automtically extracts messages from your code
+---
+
+Normally, this is the stage where you might pull all your strings out of your code and into a handmade dictionary, which can be hard to maintain and detrimental to readability.
+
+Instead, start by wrapping your strings in the t function. For example, in next-international you could update a server component to look like this:
+```tsx
+import { getI18n } from '@/yuzu/server' // new
+
+async function MyComponent() {
+  const t = await getI18n() // new
+  const poetry = t('how vast you are this evening') // wrapped in t()
+  return (
+    {/* wrapped in t() */}
+    <div>{t('hello world')}</div> 
+    <div>{poetry}</div>
+  )
+}
+```
+
+And a client component like this:
+```tsx
+'use client'
+
+import { useI18n } from '@/yuzu/client'
+
+function MyComponent() {
+  const t = useI18n() 
+  const poetry = t('how vast you are this evening')
+  return (
+    <div>{t('hello world')}</div> 
+    <div>{poetry}</div>
+  )
+}
+```
+
+Once you have some strings wrapped in `t()` you can run `yuzu build`.
+
+```bash
+npx yuzu build
+```
+
+The `build` command looks in all your source files and extracts strings to translate. It does this by (1) matching all
+the files to the globs in the content array from `yuzu.config` file (similar to [tailwindcss](https://tailwindcss.com/docs/content-configuration)) 
+and (2) finding all arguments to function calls based on the transformers in your config file.
+
+For example, from the React component below it would extract the translation key 'Hello entire world.' and save it to your default language file (e.g. `yuzu/en.json`).
+
+```tsx
+export default function() {
+  <div>
+    <div>
+      {t('Hello entire world')}
+    </div>
+    <div>
+      Hello one section of the world
+    </div>
+  </div>
+}
+```
+
+Yuzu then updates your translation keys to match the ones found during `build` and saves them to a file for each locale based on your config file. If you already have existing translations in those files, Yuzu will defer to the existing translations. Otherwise, it will populate the value as the key for the default language, and as the empty string (which will fall back to the default language) for others.
+
+> For readability and simplicity, Yuzu assumes you will us the default language string as the translation key, but this is not strictly necessary. If you don't want to do this, let us know in the [discord](/discord).
+
+Now that your messages are in your default language file, you're ready to `push` them to your yuzu project.
