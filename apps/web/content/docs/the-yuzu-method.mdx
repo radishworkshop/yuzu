@@ -1,0 +1,62 @@
+---
+title: The Yuzu Method
+description: Yuzu ships packed with features and also opinions
+---
+
+Localization at its best is easily controllable but also stays out of your way. The Yuzu Method starts by asking "how do you already write code when you're not localizing" and trying to help you localize effectively while changing as little as possible. We err on the side of making things as easy as possible instead of optimizing for infinite scale and edge cases.
+
+Similar to the [Linear Method](https://linear.app/method), the Yuzu Method is an opinionated collection of principles and opinions that follow. Many of these are commonsense, and some of them are more controversial. For the ones not everyone agrees with, that's okay. We invite your feedback and also congratulate you on having a process that works for you. If you're localizing at all, that's great to hear.
+
+# Going inside out
+We start with how you already code web apps and try to make localization work with your existing practices. For example, if you're making an app and not thinking about localization, you might:
+
+* Write strings directly in views and components and configuration files.
+* Compile strings into your build (no external runtime dependencies)
+* Treat your codebase as the source of truth for your strings.
+* Have an easy time importing and parsing and serializing JSON.
+* Render plurals using something like:
+
+```jsx
+// before yuzu
+<div>
+  You have {count > 0 ? count : 'no'} message{count !== 1 ? 's' : ''}
+<div>
+```
+
+This example is actually made simpler with yuzu and next-international:
+```jsx
+// with yuzu & next-international
+<div>
+  You have {count} t('messages', { count })
+<div>
+```
+
+## Sources of truth 
+Wherever you need to keep data in sync, it's important that you have a source of truth.
+
+* Your codebase is the source of truth for which messages need to be translated.
+* The web backend (Codesheets) is the source of truth for the translated values.
+* Generated JSON files should not be edited and are not a source of truth.
+* Generated JSON files should be compiled into your build whenever possible (no external runtime dependencies)
+
+## Messages format
+* Yuzu's opinion is that your message keys should be the default locale string itself. This offers major benefits for setup and readability, but would normally make it harder to change strings. This is handled easily by `yuzu build`. The other limitation is that you can't have different translations for the same string (yet), and 
+* Plurals assume the [next-international format](https://next-international.vercel.app/docs/app-plurals) of `t('cows', { count: numCows })`
+
+## File format
+* JSON: While there are many formats that could work, and .ts even has benefits of type safety, Yuzu keeps it simple and portable by using JSON for all dictionary files.
+* One file per locale is the way Yuzu works at present. Since most users don't use multiple locales, we are opposed to combining strings from different locales.
+* For projects with a large amount of content (much larger than yuzujs.com, for example), you may want to have multiple files for a single locale. While this is not yet supported, we would like to build this in the future.
+
+## URLs
+* We ❤️ path-based localization. You can use Yuzu to do subdomain-based localization (fr.domain.com/xyz) or domain-based (e.g. domain.fr) but we believe path-based is better (domain.com/fr/xyz). The main reason for this is Search Engine Optimization (SEO). If you have a subdomain for each locale, you're splitting your SEO juice between multiple domains. If you have a path for each locale, you're keeping all your SEO juice on the same domain. This is a big deal for most projects. You may also benefit from improved caching and performance, as well as an easier time managing deployments to modern hosting providers. Google itself went "domainless" in the late 2010.
+* We don't feel as strongly about localized URL-paths (e.g. /tools &rarr; /fr/outils), although it might be a nice-to-have. We don't do anything to support them out of the box today, but may consider it in the future.
+* We strongly support redirecting users to different locales instead of rewriting the url invisibly. This is critical for SEO, so that search engines can index your support for different locales at different URLs.
+* We also support the `rewriteDefault` localization strategy, by which the default locale is not included in the URL. This way users using the default language don't have to see the locale in the URL. (It was only a small change, but we actually implemented this strategy within next-international.)
+
+If these default assumptions are workable for you, you're a great candidate to use Yuzu.
+If not, we hope you'll let us know.
+
+<Link target="_blank" href="/discord" prefetch={false}><Button variant="outline" className="mt-4 text-white hover:text-white" style={{
+  backgroundColor: '#5865f2'
+}}><Icons.discord className="w-4 h-4 flex-none mr-2" /> Join the Discord</Button></Link>

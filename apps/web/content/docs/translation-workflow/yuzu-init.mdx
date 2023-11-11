@@ -1,0 +1,41 @@
+---
+title: Initializing Yuzu
+description: Setting up your workspace and creating a project
+---
+
+The simplest way to install yuzu is with NPM. [NPM recommends](https://docs.npmjs.com/downloading-and-installing-packages-globally) simply using the `npx` command as opposed to installing globally, or you can run `npm install -g yuzu` if you prefer. These docs will assume you are using `npx`.
+
+## Initializing the Yuzu project
+The first thing you'll want to do is initialize yuzu in your project root. This will create a `yuzu.config.ts` file, as well as a directory for your translations, with a file for your default language.
+
+```bash
+npx yuzu init
+```
+
+Answer the provided options. The reason Yuzu asks about the web framework you're using
+is for code generation purposes. Certain frameworks (e.g. next-international) are fully supported out of the box, meaning Yuzu will automatically generate and update your 
+server.ts and client.ts files.
+
+If you would like to see more support, don't hesitate to [request it](/discord)!
+
+```txt
+$ Would you like to use TypeScript (recommended)? › no / yes
+$ Which web framework are you using? › - Use arrow-keys. Return to submit.
+❯    NextJS
+-    Astro
+-    SvelteKit
+-    Other
+$ What is your default locale code? › en
+$ What is your default locale name? › English
+$ What tone would you like to use for translations (formal or informal)?
+$ In which folder will your resource files reside (e.g. 'en.json')? › yuzu
+$ Write configuration to yuzu.config.[ts|js]. Proceed?
+```
+
+This will generate a yuzu config file, as well as the directory for your translations, with a file for your default language.
+
+Finally, the `init` command will open a browser window to the Yuzu dashboard. There you can make a new project and save the API key in your environment file (such as .env or .env.local) as `YUZU_API_KEY=your-key`.
+
+<Callout title="⚠️ Yuzu uses JSON files for each locale" className="mt-6">
+It's not recommended that you edit them directly (see [The Yuzu Method](/docs/the-yuzu-method)). The reason for this is they could be overwritten with a `sync` or `pull`, and this helps reduce errors. Instead, use CLI commands like `sync`, `build`, `push`, `pull`, and `translate` to manage your dictionary and logic.
+</Callout>

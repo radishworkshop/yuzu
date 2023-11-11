@@ -1,0 +1,97 @@
+---
+title: NextJS 
+description: Yuzu is built specifically for NextJS and the app router
+---
+
+Yuzu documentation assumes you are using App router. If you are using Pages, the client libraries will likely "just work," but see the [next-international docs](https://next-international.vercel.app/docs/pages-setup) or ask on [discord](/discord) if you run into issues.
+
+## Build
+During the `build` command, Yuzu creates server.ts and client.ts files following the specification of [next-international](https://next-international.vercel.app). By keeping these in sync with your config file, you only have to worry about editing in one place.
+
+## Resources
+There are a variety of other setup tasks, including configuring middleware.ts and adding a language switcher to your app. For both,
+we offer templates and components that you are free to use. We do this via copy/paste to avoid making assumptions about your project.
+This way you can make the components truly yours and account for things like authentication stack. 
+
+## Middleware
+There are also docs on [next-international](https://next-international.vercel.app/docs/app-setup), but these work with your Yuzu config file to avoid having to duplicate configuration.
+
+<Tabs defaultValue="vanilla" className="mt-8">
+<TabsList>
+  <TabsTrigger value="vanilla">Vanilla</TabsTrigger>
+  <TabsTrigger value="next-auth">With NextAuth</TabsTrigger>
+  <TabsTrigger value="clerk">With Clerk</TabsTrigger>
+</TabsList>
+<TabsContent value="vanilla">
+```ts
+import { NextRequest } from 'next/server'
+import { createI18nMiddleware } from 'next-international/middleware'
+import yuzuConfig from '@/yuzu.config'
+
+const I18nMiddleware = createI18nMiddleware({
+  locales: yuzuConfig.locales.map(locale => locale.code),
+  defaultLocale: yuzuConfig.defaultLocale,
+  urlMappingStrategy: 'rewriteDefault'
+}) 
+
+export function middleware(req: NextRequest) {
+  return I18nMiddleware(req)
+}
+ 
+export const config = {
+  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)']
+}
+```
+</TabsContent>
+<TabsContent value="next-auth">
+```ts
+import { withAuth } from 'next-auth/middleware'
+import { createI18nMiddleware } from 'next-international/middleware'
+import yuzuConfig from '@/yuzu.config'
+
+const I18nMiddleware = createI18nMiddleware({
+  locales: yuzuConfig.locales.map(locale => locale.code),
+  defaultLocale: yuzuConfig.defaultLocale,
+  urlMappingStrategy: 'rewriteDefault'
+}) 
+
+export default withAuth(
+  function middleware(req) {
+    return I18nMiddleware(req)
+  }
+)
+
+export const config = {
+  matcher: ['/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)'],
+}
+```
+You can add more to the `withAuth` function as well (see [NextAuth docs](https://next-auth.js.org/configuration/nextjs#wrap-middleware))
+</TabsContent>
+<TabsContent value="clerk">
+```ts
+import { NextResponse } from 'next/server'
+import { authMiddleware } from '@clerk/nextjs';
+import { createI18nMiddleware } from 'next-international/middleware'
+import yuzuConfig from '@/yuzu.config'
+
+const I18nMiddleware = createI18nMiddleware({
+  locales: yuzuConfig.locales.map(locale => locale.code),
+  defaultLocale: yuzuConfig.defaultLocale,
+  urlMappingStrategy: 'rewriteDefault'
+}) 
+
+export default authMiddleware({
+  beforeAuth: (req) => {
+    return I18nMiddleware(req)
+  }
+})
+
+export const config = {
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+}
+```
+</TabsContent>
+</Tabs>
+
+## Language Switcher
+Lastly, you'll need a way to let users change the language. As a starting point, we provide a [`<LanguageSwitcher />`](/docs/react-components/language-switcher) component that you can copy & paste into your project and customize as needed.

@@ -1,0 +1,39 @@
+---
+title: Advanced features
+description: Localization is often an "iceberg" problem.
+---
+
+## Overview
+Most of the complexity with localization is often beneath the surface,
+and Yuzu is still here to help when you have specific needs. Our advice in most cases is to start simple and only worry about these problems once you encounter them.
+
+## URLs
+Sometimes you want to have URLs in the language of the user, for example
+`/tools` might be `/es/herramientas` and `fr/outils`.
+
+This is supported in certain frameworks and i18n libraries (not yet supported in next-international), or there are guides on how to build your own (e.g. for [Astro](https://docs.astro.build/en/recipes/i18n/#translate-routes)). Whatever your needs, the [community](/discord) is here to help.
+
+## Number formatting
+### Large numbers
+Number formatting varies by location and language. For example, one million ten thousand in the
+US is `1,000,000` but in India it is `10,00,000`, in France it is `1 000 000`, and in Spain it is `1.000.000`.
+
+One solution is to use [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) and `currentLocale` to format numbers in a locale-aware way.
+
+## Pluralization
+In all languages, we have logic for pluralization of words. For example, in English, we have `1 item` and `2 items`. In Spanish,
+we have `1 artículo` and `2 artículos`. In Arabic, we have `1 مادة` and `2 مواد`.
+Plurals are supported by next-international and many other libraries. If you're having challenges, the discord is here to help.
+
+## Dates
+In some languages, the month comes before the day, or vice-versa. There are a variety of libraries to handle this, including some built into JavaScript like `toLocaleDateString()`.
+
+### Ordinals
+You might have a variable that shows `1st`, `2nd`, or `3rd`, for example the results of a race. In Spanish for example, 1st would be 1er (masculine) or 1ra (feminine). You can learn more about this problem and solutions [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/PluralRules).
+
+## Gendered words and phrases
+In certain languages like Spanish, many words have a 'masculine' and 'feminine' form. If you want to support this in your app, e.g. addressing the user by the right form for them, you can build a personalization layer. Yuzu doesn't support this out of the box, but we would be eager to learn about your situation and to help out.
+
+## Currencies
+In some languages, the currency symbol comes before the amount, or vice-versa.
+There are also global exchange rates that might affect the numbers that show for a particular amount. Yuzu doesn't support these directly, but again [JavaScript may be of help](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).

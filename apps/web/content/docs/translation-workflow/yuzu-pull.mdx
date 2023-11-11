@@ -1,0 +1,24 @@
+---
+title: Pulling down your dictionary
+description: The final step to prepare your dictionary
+---
+
+Once your Codesheet accurately represents your dictionary, you can pull it down into your project.
+
+```bash
+npx yuzu pull
+```
+
+This will replace each generated JSON file with the latest translations from your Codesheet.
+As mentioned previously, you never want to edit the generated JSON manually. It's error-prone
+and could get overwritten with the next `pull`.
+
+That's it. This is the core translation workflow:
+
+* `build` when you change the messages in your codebase wrapped in `t()` calls.
+* `push` updated messages to the web backend.
+* `translate` any missing strings at your convenience.
+* `pull` down the latest dictionary.
+
+Depending you your web framework (e.g. NextJS, Astro, SvelteKit, Nuxt, etc.), you'll have a few more things to do to get things set up and working end-to-end. For example, in NextJS, you'll need a `middleware.ts` file to handle path-based routing and a `<LanguageSwitcher />`
+component so that users can change the language themselves. These docs will cover each in detail.
