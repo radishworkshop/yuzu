@@ -140,13 +140,6 @@ Yuzu uses a licensed font, [Codec Pro](https://www.zetafonts.com/codec-pro), whi
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see
    your server running.
 
-### Videos
-
-Videos to better understand Yuzu and YuzuJS
-
-- [TODO(CLI demo)](https://youtube.com/watch?v=ID).
-- [TODO(self-hosting demo)](https://youtube.com/watch?v=ID).
-
 ## Contributing 🤝
 
 If you want to help us build the simplest platform for NextJS localization,
