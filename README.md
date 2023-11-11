@@ -129,17 +129,13 @@ bunx yuzu pull # or npx
 
    In `apps/web` you will find .env.example. Change the name to .env.local and add your own values. You'll also want to update `apps/web/.xatarc` with your database URL.
 
-5. Add your fonts
-Yuzu uses a licensed font, [Codec Pro](https://www.zetafonts.com/codec-pro), which is not included in this git repository. You can license the font yourself, or add your own font files, or swap to a Google Font using `next/font/google` instead of `next/font/local`.
-
-6. Start the development server
+5. Start the development server
 
    ```sh
     bun dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see
-   your server running.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see your server running.
 
 ## Contributing 🤝
 
