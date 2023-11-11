@@ -20,7 +20,7 @@ export const siteMetadata = {
   ],
   url: "https://www.yuzujs.com",
   openGraph: {
-    images: ['/images/dist/banner.jpg'],
+    images: ['/images/content/banner.jpg'],
   },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },

@@ -23,7 +23,7 @@ export const getBlogConfig = async () => {
 }
 
 export const blogConfig = [{
-  image: "/images/dist/landing-page.png",
+  image: "/images/content/landing-page.png",
   title: "Welcome to Yuzu",
   description: "Localize NextJS apps in a snap",
   href: "/blog/welcome-to-yuzu",

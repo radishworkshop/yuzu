@@ -2,7 +2,7 @@
 
 The open-source translation management platform and localization system.
 
-![landing page image](https://www.yuzujs.com/images/dist/landing-page.png)
+![landing page image](https://www.yuzujs.com/images/content/landing-page.png)
 <p>
   <a aria-label="Radish Workshop" href="https://yuzujs.com">
     <img src="https://img.shields.io/badge/Radish_Workshop-000000?style=for-the-badge">
