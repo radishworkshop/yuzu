@@ -1,4 +1,5 @@
 # Yuzu
+
 The open-source translation management platform and localization system.
 
 ![landing page image](https://www.yuzujs.com/images/dist/landing-page.png)
