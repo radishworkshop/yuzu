@@ -7,11 +7,11 @@ import { Command } from 'commander'
 import ora from 'ora'
 import * as z from 'zod'
 import axios from 'axios'
-import { ORIGIN } from '@/src/utils/templates'
+import { getOrigin } from '@/src/cli'
 import { build } from '@/src/commands/build'
 import { push } from '@/src/commands/push'
 import { pull } from '@/src/commands/pull'
-import { requestConfig } from '../utils/api'
+import { getRequestConfig } from '@/src/utils/api'
 
 const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -54,6 +54,6 @@ export const translateCommand = new Command()
 
   const translate = async (config: Config, cwd: string) => {
     const spinner = ora(` Translating messages...`).start()
-    await axios.post(ORIGIN + '/api/translate', {}, requestConfig)
+    await axios.post(getOrigin() + '/api/translate', {}, getRequestConfig())
     spinner.succeed()
   }

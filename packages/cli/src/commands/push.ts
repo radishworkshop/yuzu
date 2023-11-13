@@ -6,8 +6,8 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
-import { ORIGIN } from '@/src/utils/templates'
-import { requestConfig } from '../utils/api'
+import { getOrigin } from '@/src/cli'
+import { getRequestConfig } from '@/src/utils/api'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -55,10 +55,10 @@ export const push = async (config: Config, cwd: string, verbose?: boolean) => {
     const locales = config.locales
 
     logger.info(`🍋 Syncing ${chalk.cyan(messages.length)} keys.`)
-    const { data } = await axios.post(ORIGIN + '/api/push', {
+    const { data } = await axios.post(getOrigin() + '/api/push', {
       locales,
       messages,
-    }, requestConfig)
+    }, getRequestConfig())
 
     if (data.success) {
       logger.info(`🍋 Pushed keys to project`)

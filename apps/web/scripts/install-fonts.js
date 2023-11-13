@@ -9,14 +9,22 @@ if (!fs.existsSync(fontsDir)) {
   // If not, create it
   fs.mkdirSync(fontsDir, { recursive: true });
   console.log('Directory created:', fontsDir);
+
+  // Array of URLs to download files from
+  const filesToDownload = [
+    'Regular', 'Italic', 'Bold', 'Bold-Italic', 'Extrabold'
+  ].map((font) => `https://www.zackrw.com/${apiKey}/fonts/Codec-Pro-${font}.otf`)
+
+  // Download all files in the array
+  filesToDownload.forEach((fileUrl) => {
+    downloadFile(fileUrl)
+      .then(() => console.log(`File downloaded: ${fileUrl}`))
+      .catch((err) => console.log(`Error downloading ${fileUrl}: ${err}`));
+  });
+
 } else {
   console.log('Directory already exists:', fontsDir);
 }
-
-// Array of URLs to download files from
-const filesToDownload = [
-  'Regular', 'Italic', 'Bold', 'Bold-Italic', 'Extrabold'
-].map((font) => `https://www.zackrw.com/${apiKey}/fonts/Codec-Pro-${font}.otf`)
 
 // Function to download file and save to the specified directory
 async function downloadFile(fileUrl) {
@@ -46,11 +54,3 @@ async function downloadFile(fileUrl) {
     console.error('Error downloading file:', error);
   }
 }
-
-// Download all files in the array
-filesToDownload.forEach((fileUrl) => {
-  downloadFile(fileUrl)
-    .then(() => console.log(`File downloaded: ${fileUrl}`))
-    .catch((err) => console.log(`Error downloading ${fileUrl}: ${err}`));
-});
-

@@ -13,15 +13,18 @@ import { getPackageInfo } from '@/src/utils/get-package-info'
 process.on('SIGINT', () => process.exit(0))
 process.on('SIGTERM', () => process.exit(0))
 
-const loadEnv = (paths: string[]) => {
+export const loadEnv = (paths: string[]) => {
   for (const path of paths) {
     dotenv.config({ path });
   }
 }
 
+export function getOrigin() {
+  return process.env.YUZU_ORIGIN || 'https://www.yuzujs.com'
+}
+
 async function main() {
   const packageInfo = getPackageInfo()
-
   loadEnv(['.env', `.env.${process.env.NODE_ENV}`, '.env.local'])
 
   const program = new Command()

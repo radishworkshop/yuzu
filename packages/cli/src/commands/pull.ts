@@ -6,8 +6,8 @@ import chalk from 'chalk'
 import * as fs from 'fs'
 import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
-import { ORIGIN } from '@/src/utils/templates'
-import { requestConfig } from '@/src/utils/api'
+import { getOrigin } from '@/src/cli'
+import { getRequestConfig } from '@/src/utils/api'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -51,9 +51,9 @@ export const pull = async (config: Config, cwd: string, verbose?: boolean) => {
     const messages = Object.keys(dictionary)
 
     logger.info(`🍋 Pulling translations for ${chalk.cyan(messages.length)} keys.`)
-    const { data } = await axios.post(ORIGIN + '/api/pull', {
+    const { data } = await axios.post(getOrigin() + '/api/pull', {
       messages,
-    }, requestConfig)
+    }, getRequestConfig())
 
     if (data.error) {
       logger.error(`🍋 Failed: ${data.error}`)

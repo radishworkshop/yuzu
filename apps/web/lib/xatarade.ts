@@ -28,10 +28,6 @@ export async function createProject(userId: string, name: string) {
   const codesheetsApiKey = process.env.CODESHEETS_API_KEY
 
   if (codesheetsApiKey) {
-
-    console.log(process.env.CODESHEETS_HOST)
-    console.log(process.env.CODESHEETS_API_KEY)
-
     const codesheetsId = await createCodesheet({
       apiKey: codesheetsApiKey,
     }, {

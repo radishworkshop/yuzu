@@ -1,8 +1,5 @@
 import { Config } from '@/src/utils/get-config'
 
-// export const ORIGIN = 'http://localhost:3000'
-export const ORIGIN = process.env.YUZU_ORIGIN || 'https://www.yuzujs.com'
-
 export const CONFIG = (config: Config) => `${MODULE(config, `
   locales: [{
     code: '${config.locales[0].code}',
