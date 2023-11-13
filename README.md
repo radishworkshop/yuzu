@@ -106,34 +106,50 @@ bunx yuzu pull # or npx
 
 1. Clone the repository
 
-   ```sh
-   git clone https://github.com/radishworkshop/yuzu.git
-   ```
+  ```sh
+  git clone https://github.com/radishworkshop/yuzu.git
+  ```
 
 2. Install dependencies
 
-   ```sh
-   bun i
-   ```
+  ```sh
+  bun i
+  ```
 
 3. Get your API keys
 
-   For everything to work out of the box, you will need API keys for
-   [Clerk](https://clerk.com) (Auth),
-   [Codesheets](https://codesheets.com) (TMS + GPT-4),
-   [Xata](https://xata.io) (DB, see `apps/web/db/xata.ts` for schema),
-   [DeepL](https://www.deepl.com/pro-api) (ML translation),
-   and [Google Translate](https://cloud.google.com/translate) (ML translation)
+  For everything to work out of the box, you will need API keys for
+  [Clerk](https://clerk.com) (Auth),
+  [Codesheets](https://codesheets.com) (TMS + GPT-4),
+  [Xata](https://xata.io) (DB, see `apps/web/db/xata.ts` for schema),
+  [DeepL](https://www.deepl.com/pro-api) (ML translation),
+  and [Google Translate](https://cloud.google.com/translate) (ML translation)
 
 4. Set up your environment 
 
-   In `apps/web` you will find .env.example. Change the name to .env.local and add your own values. You'll also want to update `apps/web/.xatarc` with your database URL.
+  In `apps/web` you will find .env.example. Change the name to .env.local and add your own values. You'll also want to update `apps/web/.xatarc` with your database URL.
 
-5. Start the development server
+5. Add your fonts
 
-   ```sh
-    bun dev
-   ```
+  [yuzujs.com](https://yuzujs.com) uses a licensed font called Codec Pro, which is not free and therefore included in this repository. In production, Codec Pro is loaded at build time via a script called `scripts/install-fonts.js`. It uses the FONTS_API_KEY environment variable and gets the fonts from a secret URL at my personal website, zackrw.com.
+
+  You can easily get everything working by using `next/font/google` in `apps/web/app/layout.tsx` or making a fonts folder in `apps/web` and importing those. You can also purchase [Codec Pro](https://www.zetafonts.com/codec-pro) yourself if you feel like supporting it, and then copy those files into fonts. Or, you can even make your own server and use `FONTS_API_KEY` like we do.
+
+  If you decide to replace `next/font/local` with `next/font/google` in `apps/web/app/layout.tsx`, here are [more details](https://nextjs.org/docs/pages/api-reference/components/font)). For example:
+
+  ```ts
+  // replace 'next/font/local' and delete references to codecPro
+  import { Inter } from 'next/font/google' 
+
+  // replace codecPro.className
+  <body className={inter.className}> ... </body>
+  ```
+
+6. Start the development server
+
+  ```sh
+  bun dev
+  ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see your server running.
 

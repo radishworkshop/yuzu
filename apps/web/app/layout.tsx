@@ -11,10 +11,6 @@ import { SiteFooter } from '@/components/misc/site-footer'
 import { twitterMetadata, siteMetadata } from '@/config/site'
 import { layoutAppearance } from '@/config/clerk';
 
-// NOTE TO DEVELOPERS
-// Ensure you have a license to use https://www.zetafonts.com/codec-pro,
-// or swap in a different font.
-
 const codecPro = LocalFont({
   src: [{
     path: '../fonts/Codec-Pro-Regular.otf',
