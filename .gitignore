@@ -20,6 +20,7 @@ dist/
 *.pem
 .xatarc
 .vscode
+fonts
 
 # debug
 npm-debug.log*
@@ -38,6 +39,3 @@ yarn-error.log*
 
 .contentlayer
 tsconfig.tsbuildinfo
-
-# fonts
-fonts

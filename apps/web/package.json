@@ -2,8 +2,8 @@
   "name": "web",
   "version": "0.1.0",
   "scripts": {
-    "dev": "contentlayer build && next dev",
-    "build": "contentlayer build && next build",
+    "dev": "node ./scripts/install-fonts && contentlayer build && next dev",
+    "build": "node ./scripts/install-fonts && contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watch",

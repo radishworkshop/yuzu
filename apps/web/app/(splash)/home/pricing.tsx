@@ -33,7 +33,7 @@ const plans = [
     name: 'Developer',
     id: 'plan-developer',
     href: '#',
-    price: { monthly: '$29', annually: '$19' },
+    price: { monthly: '$35', annually: '$25' },
     description: 'For growing projects with more content and pages.',
     features: [
       '10,000 words / month',
