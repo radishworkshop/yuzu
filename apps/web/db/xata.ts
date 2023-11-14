@@ -12,9 +12,9 @@ const tables = [
     columns: [
       { name: "name", type: "string" },
       { name: "apiKey", type: "string" },
-      { name: "nameSlug", type: "string" },
       { name: "userId", type: "string" },
       { name: "codesheetsId", type: "string" },
+      { name: "slug", type: "string" },
     ],
     revLinks: [{ column: "project", table: "runs" }],
   },
@@ -47,7 +47,6 @@ const DatabaseClient = buildClient();
 const defaultOptions = {
   databaseURL: process.env.XATA_DB_URL,
 }
-
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
   constructor(options?: BaseClientOptions) {

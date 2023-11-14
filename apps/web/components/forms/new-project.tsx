@@ -46,7 +46,7 @@ export function NewProjectForm() {
       // baseLang: values.baseLang,
     }).then((response) => {
       if (!response.data.error) {
-        router.push(`/${response.data.username}/${response.data.nameSlug}`)
+        router.push(`/projects/${response.data.slug}`)
       }
       else {
         setSubmitting(false)

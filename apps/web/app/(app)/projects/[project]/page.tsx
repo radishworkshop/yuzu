@@ -10,28 +10,13 @@ const xata = getXataClient()
 
 interface ProjectProps {
   params: {
-    username: string
     project: string
   }
 }
 
-export default async function Usage({ params }: ProjectProps) {
-  const commands = [{
-    command: 'echo "YUZU_PROJECT_KEY=$(pbpaste)" >> .env.local',
-    description: 'Add this project key to your environment file',
-  }, {
-    command: 'npx yuzujs@latest init',
-    description: 'Initialize your project',
-  }, {
-    command: 'npx yuzujs build',
-    description: 'Build your project',
-  }, {
-    command: 'npx yuzujs translate',
-    description: 'Push, translate, and pull strings',
-  }]
-
+export default async function Project({ params }: ProjectProps) {
   const project = await xata.db.projects.select(['id', 'name', 'apiKey', 'codesheetsId']).filter({
-    nameSlug: params.project,
+    slug: params.project,
   }).getFirst()
 
   if (project && project.codesheetsId) {
@@ -78,31 +63,6 @@ export default async function Usage({ params }: ProjectProps) {
               </Link>
             </CardContent>
           </Card>
-            {/*
-          <Card className="mt-8">
-            <CardHeader className='border-b'>
-              <CardTitle>CLI cheatsheet</CardTitle>
-              <CardDescription>Remember to <code>npm install next-international --save</code> or your preferred i18n library</CardDescription>
-            </CardHeader>
-            <CardContent className='mt-6'>
-              <ol>
-                {commands.map((command, i) => (
-                  <li key={i} className="mb-4">
-                    {command.description}:{' '}
-                    <code className="text-yuzu text-sm py-1 px-2 border rounded-lg">
-                      {command.command}
-                    </code>
-                  </li>
-                ))}
-              </ol>
-              <a href="/docs">
-                <Button variant="secondary" size="lg">
-                  Full documentation
-                </Button>
-              </a>
-            </CardContent>
-          </Card>
-             */}
         </div>
       </div>
     )

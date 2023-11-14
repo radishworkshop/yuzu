@@ -3,21 +3,16 @@ import { getAllProjects } from '@/lib/xatarade'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { redirect } from 'next/navigation'
-import { currentUser } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs'
 
-export default async function Dashboard({ params }: { params: { username: string } }) {
-  const user = await currentUser()
+export default async function Projects() {
+  const { userId } = auth()
 
-  if (!user) {
+  if (!userId) {
     redirect('/')
   }
-  if (user.username !== params.username) {
-    return (
-      <div>PAGE NOT FOUND</div>
-    )
-  }
 
-  const projects = await getAllProjects(user.id)
+  const projects = await getAllProjects(userId)
   return (
     <div className="max-w-6xl px-4 mx-auto py-16">
       <div className="mb-6 flex justify-end gap-6">
@@ -32,7 +27,7 @@ export default async function Dashboard({ params }: { params: { username: string
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {projects.map((project, index) => (
-          <Link key={index} href={`/${user.username}/${project.nameSlug}`}>
+          <Link key={index} href={`/projects/${project.slug}`}>
             <Card className="p-6 cursor-pointer hover:bg-accent">
               {project.name}
             </Card>

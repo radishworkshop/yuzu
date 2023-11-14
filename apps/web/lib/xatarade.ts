@@ -1,7 +1,7 @@
 // This file is helper methods for xata
 import { getXataClient } from '@/db/xata'
 const xata = getXataClient()
-import cryptoRandomString from 'crypto-random-string'
+import randomString from 'crypto-random-string'
 import { createCodesheet } from 'codesheets'
 
 // map the yuzu project to a codesheet
@@ -20,11 +20,8 @@ export async function getAllProjects(userId: string) {
 }
 
 export async function createProject(userId: string, name: string) {
-  const apiKey = 'yuzu_' + cryptoRandomString({length: 32, type: 'alphanumeric'});
-
-  const nameSlug = getSlugForName(name)
-  await validateNameSlug(userId, nameSlug) // throws if nameSlug is taken
-
+  const apiKey = 'yuzu_' + randomString({length: 32, type: 'alphanumeric'});
+  const slug = randomSlug()
   const codesheetsApiKey = process.env.CODESHEETS_API_KEY
 
   if (codesheetsApiKey) {
@@ -37,7 +34,7 @@ export async function createProject(userId: string, name: string) {
 
     if (codesheetsId) {
       return await xata.db.projects.create({
-        name, nameSlug, apiKey, userId, codesheetsId
+        name, slug, apiKey, userId, codesheetsId
       })
     }
     else {
@@ -48,18 +45,6 @@ export async function createProject(userId: string, name: string) {
   }
 }
 
-async function validateNameSlug(userId: string, nameSlug: string) {
-  const existingProject = await xata.db.projects.filter({
-    userId: userId,
-    nameSlug: nameSlug,
-  }).getFirst()
-
-  if (existingProject) {
-    throw new Error(`This account already has a project under ${nameSlug}.`)
-  }
-}
-
-function getSlugForName(name: string) {
-  return name.toLowerCase().replace(/[\s-]+/g, '-').replace(/[^a-z0-9-]/g, '')
-                           .replace(/^-+|-+$/g, '').replace(/-+/g, '-')
+function randomSlug() {
+  return randomString({ length: 24, characters: '0123456789abcdefghijklmnopqrstuvwxyz' })
 }

@@ -25,8 +25,7 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({
       success: true,
-      username: user.username,
-      nameSlug: project.nameSlug,
+      slug: project.slug,
     })
   }
   catch (e: any) {

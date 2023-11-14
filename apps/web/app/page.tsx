@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 export default async function Home() {
   const user = await currentUser();
   if (user) {
-    redirect('/' + user.username)
+    redirect('/projects')
   }
   else {
     return (
