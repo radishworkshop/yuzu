@@ -13,31 +13,31 @@ Most companies feel that their product is either "pre-localization" or, later on
 that their codebase has become too complex to localize efficiently, especially as
 speed remains of the essence. In the meantime, SEO suffers, growth opportunities go unexplored, and global missions get delayed or eroded. 
 
-# Introducing Yuzu
+## Introducing Yuzu
 Yuzu is a 100% open source localization tool and translation management system. Whether you're early on or not (and whether you know it yet or not 😊), you're probably going to want to be able to localize incrementally while continuing to build. By standing on the shoulders of other open source tools, Yuzu lets you (demo below).
 
-## Yuzu CLI and yuzujs.com
+### Yuzu CLI and yuzujs.com
 The two main components of Yuzu are the [Yuzu CLI](https://www.npmjs.com/package/yuzu) and the [yuzujs.com](https://yuzujs.com) web interface. The CLI will help you initialize your project and go through the work flow of `build`-ing your views into message files,
 `push`-ing your messages to Yuzu, `translate`-ing them, and `pull`-ing them back into your codebase. The web interface will help you manage your projects and translations.
 
 You can use Yuzu for any project, but support out of the box is strongest for React and NextJS.
 
-## Codesheets
+### Codesheets
 For editing translations directly, Yuzu creates a [Codesheets](https://codesheets.com/) spreadsheet that has full spreadsheet editing capabilities and integrated GPT-4 assistance. You can also share that sheet with anyone you want to, for example a co-worker or a professional translator. If you want Yuzu's help with professional translation, [send us an email](mailto:contact@yuzujs.com).
 
 Yuzu was built as a general tool that you can use to localize any codebase, and it sits on top of any i18n library you choose. However, if you use NextJS, Yuzu also ships with built-in tools to automate all the little friction points of integrating [next-international](https://next-international.vercel.app/).
 
-## Demo
+### Demo
 <AspectRatio ratio={16 / 9}>
 <iframe src="https://www.youtube.com/embed/CJAIyXQ5wNU?si=Pwom6EEXA9ehZre_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </AspectRatio>
 
-# Localization and SEO
+## Localization and SEO
 It's well-documented that language affects Search Engine Optimization (SEO). Google itself says, "[If you search in French, most results displayed will be in that language, as it's likely you want.](https://www.google.com/search/howsearchworks/how-search-works/ranking-results/)"
 
 Meanwhile, most of the world doesn't speak English, and consumers are more likely to browse and buy in their own language. [Customers are even willing to pay more if you give them info in their own languages](https://hbr.org/2012/08/speak-to-global-customers-in-t), according to *Harvard Business Review*.
 
-# Keeping it open source
+## Keeping it open source
 Yuzu is 100% open-source, and we believe this is the best way to ship *most* software. We also think it's a good way to build a business, and we're excited to see how that side of things goes. (Everything is available for free, but there are free tier limits on the number of words you can translate using the backend APIs. You can also self-host Yuzu if you prefer.)
 
 If you are a fan of open source, we hope you'll consider giving us a star on GitHub or [contributing](https://github.com/radishworkshop/yuzu/blob/main/CONTRIBUTING.md) directly to the codebase.

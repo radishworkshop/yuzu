@@ -57,11 +57,30 @@ const faq = [{
     Currently the decision is purely a function of the language pair. For example, en &rarr; fr will use DeepL, while en &rarr; ar will use Google Translate.
   </div>)
 }, {
-  question: 'Can I use Yuzu with other localization software?',
+  question: 'Does Yuzu support NextJS App Directory?',
+  answer: (<div>
+    Yes. Yuzu itself is built entirely with App Directory, and we seamlessly support next-international, which is designed to support App Directory since its inception.
+    However, you can still use Pages Directory, and it will work just as seamlessly.
+  </div>)
+}, {
+  question: 'Does Yuzu support TypeScript?',
+  answer: (<div>
+    Yes. The Yuzu website and the Yuzu CLI are written in TypeScript, and we recommend the typesafe library next-international. We highly recommend TypeScript for i18n, and we think
+    Yuzu works best when you use TypeScript.
+  </div>)
+}, {
+  question: 'Can I use Yuzu with another i18n library?',
+  answer: (<div>
+    There are a number of great i18n libraries, and Yuzu is designed to work seamlessly with
+    them, not to replace them.
+    If you use NextJS, we have built in support for next-international and recommend that, but the build process is completely customizable.
+  </div>)
+}, {
+  question: 'Can I use Yuzu with another TMS?',
   answer: (<div>
     Definitely. It&apos;s not uncommon to use Yuzu as a cost-effective &quot;first pass&quot; and then 
     follow-up with a translation agency or populate another Translation Management Service (TMS) with the results.
-    Yuzu is designed to fit into your workflow. We do offer expert review and a spreadsheet-style UI as well
+    Yuzu is designed to fit into your workflow. We do offer expert review and a spreadsheet-style UI as well,
     so you can use Yuzu as a one-stop shop. We are here to help, but it is entirely up to you.
   </div>)
 }, {

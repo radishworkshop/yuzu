@@ -39,3 +39,38 @@ Finally, the `init` command will open a browser window to the Yuzu dashboard. Th
 <Callout title="⚠️ Yuzu uses JSON files for each locale" className="mt-6">
 It's not recommended that you edit them directly (see [The Yuzu Method](/docs/the-yuzu-method)). The reason for this is they could be overwritten with a `sync` or `pull`, and this helps reduce errors. Instead, use CLI commands like `sync`, `build`, `push`, `pull`, and `translate` to manage your dictionary and logic.
 </Callout>
+
+## Config file format
+The commented example config file below illustrates the format that will be created
+when you run `yuzu init`. You can also edit the file directly after initial generation.
+
+```ts
+export default {
+  // List of all the locales as { code: string, name: string } objects.
+  locales: [{
+    code: 'en',
+    name: 'English',
+  }],
+  // Currently only used for generating the build function
+  webFrameworks: 'nextjs',
+  i18nFramework: 'next-international',
+  // Glob patterns for files searched during `yuzu build`
+  content: [
+    '**/*.{tsx,ts,jsx,js}'
+  ],
+  // Functions whose arguments should be extracted during `yuzu build`
+  transformers: ['t', 'i18n'],
+  // The name of the folder where localization resources live
+  resources: 'yuzu',
+  // Templates that generate helper files on `yuzu build`
+  // Can be a string or a 
+  build: (locales: { code: string, name: string }[]) => ([{
+    path: 'server.ts',
+    template: 'NEXT_INTERNATIONAL_SERVER'
+  }, {
+    path: 'client.ts',
+    template: 'NEXT_INTERNATIONAL_CLIENT'
+  }]),
+  tsx: true
+} as const
+```
