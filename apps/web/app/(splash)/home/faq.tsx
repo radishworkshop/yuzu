@@ -99,6 +99,21 @@ const faq = [{
     We also provide a number of convenient components for React, such as the{' '}
     <code className="text-yuzu text-sm py-1 px-2 border rounded-lg">{'<LanguageSwitcher />'}</code>.
   </div>)
+}, {
+  question: 'Can I use Yuzu to localize other things like my CMS and my Database?',
+  answer: (<div>
+    Right now, Yuzu is only designed to localize your codebase.
+    We are open to working on other integrations if there is interest from users.
+    <Link href="/discord">Join our discord</Link> to let us know.
+  </div>)
+}, {
+  question: 'Are there any runtime dependencies?',
+  answer: (<div>
+    High performance and lightweight footprint are critical to Yuzu,
+    so localizing your codebase won't ever have any runtime dependencies.
+    Technically speaking, your app actually won't depend on Yuzu at all,
+    since it is a command line tool that compiles all your locale files before your app is built. If you're purely using `npx`, Yuzu doesn't even need to be in your package.json.
+  </div>)
 }]
 
 
