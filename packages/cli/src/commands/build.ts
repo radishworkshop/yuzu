@@ -10,7 +10,7 @@ import { scanMessages } from '@/src/utils/scan-messages'
 import { updateDictionaries } from '@/src/utils/update-dictionaries'
 import { Config, getConfig } from '@/src/utils/get-config'
 import { errorMessages } from '@/src/utils/errors'
-import { HELPERS } from '@/src/utils/templates'
+import { BUILD_TEMPLATES } from '@/src/utils/templates'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -52,8 +52,8 @@ export const buildCommand = new Command()
     build(config, cwd, !!options.verbose)
   })
 
-function isKeyOfHELPERS(key: string): key is keyof typeof HELPERS {
-  return key in HELPERS;
+function isKeyOfBUILD_TEMPLATES(key: string): key is keyof typeof BUILD_TEMPLATES {
+  return key in BUILD_TEMPLATES;
 }
 
 export const build = (config: Config, cwd: string, verbose?: boolean) => {
@@ -77,21 +77,19 @@ export const build = (config: Config, cwd: string, verbose?: boolean) => {
     spinner.succeed()
     updateDictionaries(messages.filter((message, index) => messages.indexOf(message) === index), config, cwd)
 
-    verbose && logger.info(`🍋 Updating helper templates`)
-    config.helpers?.map(helper => {
-      if (typeof helper.template === 'string' && isKeyOfHELPERS(helper.template)) {
-        fs.writeFileSync(`${config.resources}/${helper.path}`, HELPERS[helper.template](config.locales))
-      }
-      else if (typeof helper.template === 'function') {
-        const toWrite = helper.template(config.locales)
-        if (typeof toWrite === 'string') {
-          fs.writeFileSync(`${config.resources}/${helper.path}`, toWrite)
+    verbose && logger.info(`🍋 Updating build files`)
+
+    if (config.build) {
+      const helpers: { path: string, template: string }[] = config.build(config.locales)
+      helpers.map(helper => {
+        if (typeof helper.template === 'string' && isKeyOfBUILD_TEMPLATES(helper.template)) {
+          fs.writeFileSync(`${config.resources}/${helper.path}`, BUILD_TEMPLATES[helper.template](config.locales))
         }
         else {
-          logger.warn(`🍋 The helper template for ${helper.path} did not return a string. Skipping.`)
+          logger.warn(`🍋 The build function returned a non-string template value. Skipping.`)
         }
-      }
-    })
+      })
+    }
   } catch (err) {
     logger.error(`Failed to build resources. Have you run \`init\`?`, err)
   }

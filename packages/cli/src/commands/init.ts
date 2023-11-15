@@ -16,7 +16,6 @@ import { Command } from 'commander'
 import ora from 'ora'
 import prompts from 'prompts'
 import * as z from 'zod'
-import { build } from '@/src/commands/build'
 import { create } from '@/src/commands/create'
 
 const initOptionsSchema = z.object({
@@ -46,12 +45,7 @@ export const initCommand = new Command()
 
       // Read config
       const existingConfig = await getConfig(cwd)
-      const config = await promptForConfig(cwd, existingConfig, options.yes)
-
-      logger.info('')
-
-      // Build the resources directory as well
-      build(config, cwd, false)
+      await promptForConfig(cwd, existingConfig, options.yes)
 
       logger.info(
         `${chalk.green('Success!')} Project initialization completed.`
@@ -97,7 +91,7 @@ export async function promptForConfig(
     type: 'toggle',
     name: 'typescript',
     message: `Would you like to use ${highlight('TypeScript')} (recommended)?`,
-    initial: defaultConfig?.tsx ?? true,
+    initial: defaultConfig?.typescript ?? true,
     active: 'yes',
     inactive: 'no',
   }, {
@@ -186,8 +180,7 @@ export async function promptForConfig(
     content: content,
     transformers: transformers,
     resources: resources,
-    helpers: helpers,
-    tsx: options.typescript,
+    typescript: options.typescript,
   })
 
   if (!skip) {
@@ -209,7 +202,7 @@ export async function promptForConfig(
   logger.info('')
   const spinner = ora(`Writing yuzu.config.${extension}...`).start()
   const targetPath = path.resolve(cwd, `yuzu.config.${extension}`)
-  await fs.writeFile(targetPath, templates.CONFIG(config), 'utf8')
+  await fs.writeFile(targetPath, templates.CONFIG(config, helpers), 'utf8')
   spinner.succeed()
 
   const { openWeb } = await prompts({

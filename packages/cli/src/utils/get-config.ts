@@ -22,15 +22,19 @@ export const configSchema = z
     content: z.array(z.string()),
     framework: z.enum(['nextjs', 'astro', 'svelte', 'other']),
     transformers: z.array(z.string()),
-    helpers: z.array(z.object({
+    build: z.function().returns(z.array(z.object({
       path: z.string(),
-      template: z.string().or(z.function()),
-    })).optional(),
-    tsx: z.coerce.boolean().default(true),
+      template: z.string(),
+    }))).optional(),
+    typescript: z.coerce.boolean().default(true),
   })
   .strict()
 
 export type Config = z.infer<typeof configSchema>
+export type Helper = {
+  path: string,
+  template: string,
+}
 
 export async function getConfig(cwd: string) {
   const config = await getRawConfig(cwd)
@@ -46,7 +50,7 @@ export async function resolveConfigPaths(cwd: string, config: Config) {
 
   const tsConfig = loadConfig(cwd)
 
-  if (config.tsx && tsConfig.resultType === "failed") {
+  if (config.typescript && tsConfig.resultType === "failed") {
     throw new Error(
       `Failed to load tsconfig.json. ${tsConfig.message ?? ""}`.trim()
     )

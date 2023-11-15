@@ -1,7 +1,7 @@
-import { Config } from '@/src/utils/get-config'
+import { Config, Helper } from '@/src/utils/get-config'
 import { Locale } from '@/src/types/all'
 
-export const CONFIG = (config: Config) => `${MODULE(config, `
+export const CONFIG = (config: Config, helpers: Helper[]) => `${MODULE(config, `
   locales: [{
     code: '${config.locales[0].code}',
     name: '${config.locales[0].name}',
@@ -12,11 +12,11 @@ export const CONFIG = (config: Config) => `${MODULE(config, `
   ],
   transformers: [${config.transformers.map(t => `'${t}'`).join(', ')}],
   resources: '${config.resources}',
-  helpers: [${config.helpers?.map(h => `{\n    path: '${h.path}',\n    template: '${h.template}'\n  }`).join(', ')}],
-  tsx: ${config.tsx}
+  build: (locales: { code: string, name: string }[]) => ([${helpers.map(h => `{\n    path: '${h.path}',\n    template: '${h.template}'\n  }`).join(', ')}]), 
+  typescript: ${config.typescript}
 `)}`
 
-export const MODULE = (config: Config, content: string) => `${config.tsx ? 'export default {' : 'module.exports = {'}${content}} ${config.tsx ? 'as const' : ';'}`
+export const MODULE = (config: Config, content: string) => `${config.typescript ? 'export default {' : 'module.exports = {'}${content}} ${config.typescript ? 'as const' : ';'}`
 
 const NEXT_INTERNATIONAL_SERVER = (locales: Locale[]) => `import { createI18nServer } from 'next-international/server'
 
@@ -39,7 +39,7 @@ export const { useI18n, useScopedI18n, I18nProvider, getLocaleProps } = createI1
   ${locales.map(locale => `'${locale.code}': () => import('./${locale.code}.json')`).join(',\n  ')}
 })`
 
-export const HELPERS = {
+export const BUILD_TEMPLATES = {
   NEXT_INTERNATIONAL_SERVER,
   NEXT_INTERNATIONAL_CLIENT,
   NEXT_INTERNATIONAL_PAGES,
