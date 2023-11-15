@@ -1,4 +1,4 @@
-import { handleError } from '@/src/utils/handle-error'
+import { handleError } from '@/src/utils/errors'
 import { logger } from '@/src/utils/logger'
 import { Command } from 'commander'
 import { getOrigin } from '@/src/cli'

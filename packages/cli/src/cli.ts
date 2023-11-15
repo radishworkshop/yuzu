@@ -4,7 +4,6 @@ import { createCommand } from '@/src/commands/create'
 import { buildCommand } from '@/src/commands/build'
 import { pushCommand } from '@/src/commands/push'
 import { pullCommand } from '@/src/commands/pull'
-import { syncCommand } from '@/src/commands/sync'
 import { translateCommand } from '@/src/commands/translate'
 import dotenv from 'dotenv';
 import { Command } from 'commander'
@@ -41,7 +40,6 @@ async function main() {
   program.addCommand(buildCommand)
   program.addCommand(pushCommand)
   program.addCommand(pullCommand)
-  program.addCommand(syncCommand)
   program.addCommand(translateCommand)
   
   program.parse()

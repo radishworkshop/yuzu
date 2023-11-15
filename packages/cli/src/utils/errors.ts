@@ -1,5 +1,9 @@
 import { logger } from "@/src/utils/logger"
 
+export const errorMessages = {
+  missingConfig: "No config file found. Did you run `yuzu init`?\nNeed more help: https://yuzujs.com/discord",
+}
+
 export function handleError(error: unknown) {
   if (typeof error === "string") {
     logger.error(error)

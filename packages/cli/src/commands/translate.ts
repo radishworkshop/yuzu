@@ -1,17 +1,15 @@
 import * as fs from 'fs'
 import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
-import { handleError } from '@/src/utils/handle-error'
+import { handleError } from '@/src/utils/errors'
 import { logger } from '@/src/utils/logger'
 import { Command } from 'commander'
 import ora from 'ora'
 import * as z from 'zod'
 import axios from 'axios'
 import { getOrigin } from '@/src/cli'
-import { build } from '@/src/commands/build'
-import { push } from '@/src/commands/push'
-import { pull } from '@/src/commands/pull'
 import { getRequestConfig } from '@/src/utils/api'
+import { errorMessages } from '@/src/utils/errors'
 
 const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -40,7 +38,7 @@ export const translateCommand = new Command()
       const config = await getConfig(cwd)
 
       if (!config) {
-        logger.error('No config file found.')
+        logger.error(errorMessages.missingConfig)
         return
       }
 

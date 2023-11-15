@@ -8,6 +8,7 @@ import path from 'path'
 import { Config, getConfig } from '@/src/utils/get-config'
 import { getOrigin } from '@/src/cli'
 import { getRequestConfig } from '@/src/utils/api'
+import { errorMessages } from '@/src/utils/errors'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -37,7 +38,7 @@ export const pushCommand = new Command()
 
     const config = await getConfig(cwd)
     if (!config) {
-      logger.error('No config file found.')
+      logger.error(errorMessages.missingConfig)
       return
     }
 

@@ -12,8 +12,8 @@ export const mainNav: MainNavItem[] = [{
 }]
 
 export const siteMetadata = {
-  title: 'Yuzu',
-  description: 'Localize NextJS apps in a snap',
+  title: 'Yuzu.JS – Localize Next.JS Apps in an Afternoon or Less',
+  description: 'Live up to your global mission sooner, find users where your competitors aren\'t, and get 30% more visitors with improved Search Engine Optimization (SEO).',
   metadataBase: new URL('https://www.yuzujs.com'),
   icons: [
     { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },

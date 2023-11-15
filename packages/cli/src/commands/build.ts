@@ -9,7 +9,8 @@ import path from 'path'
 import { scanMessages } from '@/src/utils/scan-messages'
 import { updateDictionaries } from '@/src/utils/update-dictionaries'
 import { Config, getConfig } from '@/src/utils/get-config'
-import { CLIENT, SERVER } from '@/src/utils/templates'
+import { errorMessages } from '@/src/utils/errors'
+import { HELPERS } from '@/src/utils/templates'
 
 const buildOptionsSchema = z.object({
   cwd: z.string(),
@@ -44,13 +45,16 @@ export const buildCommand = new Command()
 
     const config = await getConfig(cwd)
     if (!config) {
-      logger.error('No config file found.')
+      logger.error(errorMessages.missingConfig)
       return
     }
 
     build(config, cwd, !!options.verbose)
   })
 
+function isKeyOfHELPERS(key: string): key is keyof typeof HELPERS {
+  return key in HELPERS;
+}
 
 export const build = (config: Config, cwd: string, verbose?: boolean) => {
   try {
@@ -73,11 +77,21 @@ export const build = (config: Config, cwd: string, verbose?: boolean) => {
     spinner.succeed()
     updateDictionaries(messages.filter((message, index) => messages.indexOf(message) === index), config, cwd)
 
-    const extension = config.tsx ? 'ts' : 'js'
-
-    verbose && logger.info(`🍋 Updating server.${extension} and client.${extension}`)
-    fs.writeFileSync(`${config.resources}/client.${extension}`, CLIENT(config))
-    fs.writeFileSync(`${config.resources}/server.${extension}`, SERVER(config))
+    verbose && logger.info(`🍋 Updating helper templates`)
+    config.helpers?.map(helper => {
+      if (typeof helper.template === 'string' && isKeyOfHELPERS(helper.template)) {
+        fs.writeFileSync(`${config.resources}/${helper.path}`, HELPERS[helper.template](config.locales))
+      }
+      else if (typeof helper.template === 'function') {
+        const toWrite = helper.template(config.locales)
+        if (typeof toWrite === 'string') {
+          fs.writeFileSync(`${config.resources}/${helper.path}`, toWrite)
+        }
+        else {
+          logger.warn(`🍋 The helper template for ${helper.path} did not return a string. Skipping.`)
+        }
+      }
+    })
   } catch (err) {
     logger.error(`Failed to build resources. Have you run \`init\`?`, err)
   }

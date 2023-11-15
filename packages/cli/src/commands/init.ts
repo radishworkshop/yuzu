@@ -8,7 +8,7 @@ import {
   resolveConfigPaths,
   type Config,
 } from '@/src/utils/get-config'
-import { handleError } from '@/src/utils/handle-error'
+import { handleError } from '@/src/utils/errors'
 import { logger } from '@/src/utils/logger'
 import * as templates from '@/src/utils/templates'
 import chalk from 'chalk'
@@ -84,6 +84,16 @@ export async function promptForConfig(
   }]
 
   const options = await prompts([{
+    type: 'text',
+    name: 'defaultLocale',
+    message: `What is your default locale ${highlight('code')}?`,
+    initial: defaultConfig?.locales?.[0]?.code ?? DEFAULT_LOCALE_CODE,
+  }, {
+    type: 'text',
+    name: 'defaultLocaleName',
+    message: `What is your default locale ${highlight('name')}?`,
+    initial: DEFAULT_LOCALE_NAME,
+  }, {
     type: 'toggle',
     name: 'typescript',
     message: `Would you like to use ${highlight('TypeScript')} (recommended)?`,
@@ -98,20 +108,55 @@ export async function promptForConfig(
       title: framework.label,
       value: framework.name,
     })),
-  }, {
-    type: 'text',
-    name: 'defaultLocale',
-    message: `What is your default locale ${highlight('code')}?`,
-    initial: defaultConfig?.locales?.[0]?.code ?? DEFAULT_LOCALE_CODE,
-  }, {
-    type: 'text',
-    name: 'defaultLocaleName',
-    message: `What is your default locale ${highlight('name')}?`,
-    initial: DEFAULT_LOCALE_NAME,
   }])
 
   const extension = options.typescript ? 'ts' : 'js'
-  const lastOption = await prompts([{
+  const helpers = []
+  if (options.framework === 'nextjs') {
+
+    const { nextInternational  } = await prompts({
+      type: 'toggle',
+      name: 'nextInternational',
+      message: `Would you like to use ${highlight('next-international')} (recommended)?`,
+      initial: true,
+      active: 'yes',
+      inactive: 'no',
+    })
+
+    if (nextInternational) {
+      try {
+        import('execa').then(async ({ execa }) => {
+          const { stdout } = await execa('npm', ['install', '--save-dev', 'next-international@latest']);
+        })
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(`Error: ${error.message}`);
+        } else {
+          console.error('An unknown error occurred during `npm install next-international@latest`.');
+        }
+      }
+      const { router } = await prompts([{
+        type: 'select',
+        name: 'router',
+        message: `Are you using NextJS App Router?`,
+        choices: [
+          { title: 'App Router', value: 'appRouter' },
+          { title: 'Pages Router', value: 'pagesRouter' },
+          { title: 'Both', value: 'both' },
+        ]
+      }])
+
+      if (router === 'appRouter' || router === 'both') {
+        helpers.push({ path: `server.${extension}`, template: 'NEXT_INTERNATIONAL_SERVER' })
+        helpers.push({ path: `client.${extension}`, template: 'NEXT_INTERNATIONAL_CLIENT' })
+      }
+      if (router === 'pagesRouter' || router === 'both') {
+        helpers.push({ path: `index.${extension}`, template: 'NEXT_INTERNATIONAL_PAGES' })
+      }
+    }
+  }
+
+  const { resources } = await prompts([{
     type: 'text',
     name: 'resources',
     message: `In which folder will your resource files reside (e.g. 'en.json')?`,
@@ -119,11 +164,7 @@ export async function promptForConfig(
   }])
 
   // The functions that should be matched during `build`
-  const transformers = ['t', 'scopedT', 'yuzu', 'yz', 'i18n', '<Trans>',]
-
-  const content = [
-    '**/*.{tsx,ts,jsx,js}',
-  ]
+  const transformers = ['t', 'i18n']
 
   // An example of a more specific content glob array.
   // const content = [
@@ -131,6 +172,9 @@ export async function promptForConfig(
   //   'app/**/*.{tsx,ts,jsx,js}',
   //   'components/**/*.{tsx,ts,jsx,js}',
   // ]
+  const content = [
+    '**/*.{tsx,ts,jsx,js}',
+  ]
 
   const config = configSchema.parse({
     $schema: 'https://wwww.yuzujs.com/schema.json',
@@ -138,10 +182,11 @@ export async function promptForConfig(
       code: options.defaultLocale,
       name: options.defaultLocaleName,
     }],
-    resources: lastOption.resources,
+    framework: options.framework,
     content: content,
     transformers: transformers,
-    framework: options.framework,
+    resources: resources,
+    helpers: helpers,
     tsx: options.typescript,
   })
 
@@ -166,30 +211,6 @@ export async function promptForConfig(
   const targetPath = path.resolve(cwd, `yuzu.config.${extension}`)
   await fs.writeFile(targetPath, templates.CONFIG(config), 'utf8')
   spinner.succeed()
-
-  if (options.framework === 'nextjs') {
-    const { nextInternational  } = await prompts({
-      type: 'confirm',
-      name: 'nextInternational',
-      message: `Installing next-international with npm. Proceed?`,
-      initial: true,
-    })
-
-    if (nextInternational) {
-      try {
-        import('execa').then(async ({ execa }) => {
-          const { stdout } = await execa('npm', ['install', '--save-dev', 'next-international@latest']);
-          console.log(stdout)
-        })
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error(`Error: ${error.message}`);
-        } else {
-          console.error('An unknown error occurred during `npm install next-international@latest`.');
-        }
-      }
-    }
-  }
 
   const { openWeb } = await prompts({
     type: 'confirm',

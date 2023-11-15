@@ -20,8 +20,12 @@ export const configSchema = z
     })),
     resources: z.string(),
     content: z.array(z.string()),
-    transformers: z.array(z.string()),
     framework: z.enum(['nextjs', 'astro', 'svelte', 'other']),
+    transformers: z.array(z.string()),
+    helpers: z.array(z.object({
+      path: z.string(),
+      template: z.string().or(z.function()),
+    })).optional(),
     tsx: z.coerce.boolean().default(true),
   })
   .strict()

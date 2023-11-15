@@ -1,6 +1,6 @@
 {
   "name": "yuzu",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Utilities and command line interface (CLI) for yuzujs.com localization.",
   "homepage": "https://www.yuzujs.com/docs",
   "bin": "./dist/cli.js",
