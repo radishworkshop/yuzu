@@ -11,6 +11,8 @@ export const mainNav: MainNavItem[] = [{
   href: "/pricing",
 }]
 
+export const siteName = 'Yuzu'
+
 export const siteMetadata = {
   title: 'Yuzu.JS – Localize Next.JS Apps in an Afternoon or Less',
   description: 'Live up to your global mission sooner, find users where your competitors aren\'t, and get 30% more visitors with improved Search Engine Optimization (SEO).',
@@ -25,8 +27,7 @@ export const siteMetadata = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  mainNav: mainNav,
+  ]
 }
 
 export const twitterMetadata = {

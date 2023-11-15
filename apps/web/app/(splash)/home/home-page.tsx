@@ -8,7 +8,7 @@ import CustomersMarquee from './customers-marquee'
 import FeaturesPreview from './features-preview'
 import { User } from '@/types/user'
 import { SiteHeader } from '@/components/ui/site-header'
-import { siteMetadata } from '@/config/site'
+import { mainNav } from '@/config/site'
 import Pricing from './pricing'
 
 interface HomeProps {
@@ -18,7 +18,7 @@ interface HomeProps {
 export default function HomePage({ user }: HomeProps) {
   return (
     <>
-      <SiteHeader user={user} topLinks={siteMetadata.mainNav} fixed fadeIn />
+      <SiteHeader user={user} topLinks={mainNav} fixed fadeIn />
       <Lede />
       <CustomersMarquee />
       <SEOPreview />

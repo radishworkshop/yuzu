@@ -2,7 +2,7 @@ import { contentConfig } from "@/config/content"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { DocsSidebarNav } from "@/components/content/sidebar-nav"
 import { SiteHeader } from '@/components/ui/site-header'
-import { siteMetadata } from '@/config/site'
+import { mainNav } from '@/config/site'
 import { currentUser } from '@clerk/nextjs'
 
 interface ContentLayoutProps {
@@ -19,7 +19,7 @@ export default async function ContentLayout({ children, params }: ContentLayoutP
   if (['blog', 'resources'].includes(corpus)) {
     return (
       <>
-        <SiteHeader user={user} topLinks={siteMetadata.mainNav} />
+        <SiteHeader user={user} topLinks={mainNav} />
         <div className="container max-w-4xl mx-auto xl:max-w-6xl">
           {children}
         </div>
@@ -29,7 +29,7 @@ export default async function ContentLayout({ children, params }: ContentLayoutP
   else if (corpus === 'docs') {
     return (
       <>
-        <SiteHeader user={user} topLinks={siteMetadata.mainNav} sideLinks={contentConfig[corpus].sidebarNav}/>
+        <SiteHeader user={user} topLinks={mainNav} sideLinks={contentConfig[corpus].sidebarNav}/>
         <div className="flex">
           <div className="hidden md:block">
             <aside className="sticky top-16 pl-8 w-[320px] min-h-screen border-r overflow-y-auto">

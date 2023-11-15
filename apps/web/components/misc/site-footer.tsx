@@ -1,4 +1,4 @@
-import { siteMetadata, socialLinks, footerLinks } from "@/config/site"
+import { siteName, socialLinks, footerLinks } from "@/config/site"
 import { Icons } from "@/components/misc/icons"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ export function SiteFooter() {
           <div>
             <div className="flex items-center gap-4">
               <Icons.logo className="h-6 w-6" />
-              <h2 className="text-lg font-extrabold">{siteMetadata.title}</h2>
+              <h2 className="text-lg font-extrabold">{siteName}</h2>
             </div>
             <p className="text-sm mt-2 leading-loose text-muted-foreground">
               Planted by Radish Workshop. &copy; 2023.
