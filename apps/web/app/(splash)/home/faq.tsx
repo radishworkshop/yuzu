@@ -97,7 +97,7 @@ const faq = [{
     For certain libraries like <Link href="https://next-international.vercel.app/">next-international</Link>, Yuzu also manages updating library files for you.
 
     We also provide a number of convenient components for React, such as the{' '}
-    <code className="text-yuzu text-sm py-1 px-2 border rounded-lg">{'<Switcher />'}</code>.
+    <code className="text-yuzu text-sm py-1 px-2 border rounded-lg">{'<LanguageSwitcher />'}</code>.
   </div>)
 }]
 
