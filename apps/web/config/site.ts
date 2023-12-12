@@ -20,7 +20,6 @@ export const siteMetadata = {
   icons: [
     { rel: 'icon', url: '/favicon.svg', type: 'image/svg+xml' },
   ],
-  url: "https://www.yuzujs.com",
   openGraph: {
     images: ['/images/content/banner.jpg'],
   },

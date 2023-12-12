@@ -43,7 +43,7 @@ export async function generateMetadata({
   return {
     title: doc.title + ' - Yuzu.JS',
     description: doc.description,
-    metadataBase: new URL(siteMetadata.url),
+    metadataBase: siteMetadata.metadataBase,
     openGraph: {
       title: doc.title,
       description: doc.description,

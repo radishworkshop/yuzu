@@ -20,15 +20,21 @@ export function SiteFooter() {
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-              <Link href={socialLinks.discord}><Icons.discord className="w-5 h-auto" /></Link>
-            </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-              <Link href={socialLinks.twitter}><Icons.twitter className="w-5 h-auto" /></Link>
-            </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-              <Link href={socialLinks.github}><Icons.github className="w-5 h-auto" /></Link>
-            </Button>
+            <Link href={socialLinks.discord} target="_blank">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                <Icons.discord className="w-5 h-auto" />
+              </Button>
+            </Link>
+            <Link href={socialLinks.twitter} target="_blank">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                <Icons.twitter className="w-5 h-auto" />
+              </Button>
+            </Link>
+            <Link href={socialLinks.github} target="_blank">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                <Icons.github className="w-5 h-auto" />
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="col-span-2 hidden sm:block lg:hidden"></div>
