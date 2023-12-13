@@ -77,7 +77,7 @@ export const footerLinks = [{
     href: '/docs',
   }, {
     name: 'Status',
-    href: 'https://yuzu.openstatus.dev',
+    href: 'https://radish.openstatus.dev',
   }, {
     name: 'GitHub',
     href: 'https://www.github.com/radishworkshop/yuzu',
